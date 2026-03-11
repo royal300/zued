@@ -12,7 +12,7 @@ const ProductManagement = () => {
 
     const load = async () => {
         setLoading(true);
-        const res = await adminFetch(`/api/admin/products?type=${type === 'tshirts' ? 'tshirt' : 'jewellery'}`);
+        const res = await adminFetch(`/api/admin/products?type=jewellery`);
         const json = await res.json();
         setProducts(Array.isArray(json) ? json : []);
         setLoading(false);
@@ -27,13 +27,13 @@ const ProductManagement = () => {
         await load();
     };
 
-    const addRoute = type === 'tshirts' ? '/admin/products/tshirts/add' : '/admin/products/jewellery/add';
-    const editRoute = (id: number) => type === 'tshirts' ? `/admin/products/tshirts/edit/${id}` : `/admin/products/jewellery/edit/${id}`;
+    const addRoute = '/admin/products/jewellery/add';
+    const editRoute = (id: number) => `/admin/products/jewellery/edit/${id}`;
 
     return (
         <div className="p-6 min-h-screen">
             <div className="flex items-center justify-between mb-6">
-                <h1 className="font-display text-2xl text-foreground tracking-widest">{type === 'tshirts' ? 'T-SHIRTS' : 'JEWELLERY'}</h1>
+                <h1 className="font-display text-2xl text-foreground tracking-widest">JEWELLERY</h1>
                 <button onClick={() => navigate(addRoute)} className="btn-gold px-4 py-2 rounded-sm text-sm flex items-center gap-2">
                     <Plus size={14} /> Add Product
                 </button>

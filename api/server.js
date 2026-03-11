@@ -14,7 +14,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'zued-secret-2026-royal300';
 const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'zued-admin-secret-2026';
 const ADMIN_ID = process.env.ADMIN_ID || 'admin';
 const ADMIN_PASS = process.env.ADMIN_PASS || 'admin123';
-const UPLOAD_DIR = process.env.UPLOAD_DIR || '/var/www/zued/uploads';
+const UPLOAD_DIR = process.env.UPLOAD_DIR || path.join(__dirname, 'uploads');
 
 // Ensure upload dir exists
 if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
@@ -130,6 +130,13 @@ async function initDB() {
       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )
   `);
+    await conn.execute(`
+    CREATE TABLE IF NOT EXISTS settings (
+      key_name VARCHAR(100) PRIMARY KEY,
+      value TEXT,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )
+  `);
     conn.release();
     console.log('DB initialized');
 }
@@ -222,14 +229,12 @@ app.get('/api/admin/dashboard', adminMiddleware, async (req, res) => {
         }
 
         const [totalRows] = await pool.execute(`SELECT COUNT(*) as count, COALESCE(SUM(total),0) as revenue FROM orders ${dateFilter}`, params);
-        const [tshirtRows] = await pool.execute(`SELECT COUNT(*) as count, COALESCE(SUM(total),0) as revenue FROM orders WHERE product_type='tshirt' ${dateFilter ? 'AND' + dateFilter.substring(5) : ''}`, params);
         const [jewRows] = await pool.execute(`SELECT COUNT(*) as count, COALESCE(SUM(total),0) as revenue FROM orders WHERE product_type='jewellery' ${dateFilter ? 'AND' + dateFilter.substring(5) : ''}`, params);
         const [recentOrders] = await pool.execute('SELECT id, customer_name, product_type, total, status, created_at FROM orders ORDER BY created_at DESC LIMIT 5');
         const [statusBreakdown] = await pool.execute('SELECT status, COUNT(*) as count FROM orders GROUP BY status');
 
         res.json({
             total: { count: totalRows[0].count, revenue: totalRows[0].revenue },
-            tshirt: { count: tshirtRows[0].count, revenue: tshirtRows[0].revenue },
             jewellery: { count: jewRows[0].count, revenue: jewRows[0].revenue },
             recentOrders,
             statusBreakdown,
@@ -403,6 +408,48 @@ app.post('/api/admin/upload', adminMiddleware, upload.single('image'), (req, res
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     const url = `/uploads/${req.file.filename}`;
     res.json({ url });
+});
+
+// ============================================================
+// SITE SETTINGS
+// ============================================================
+// Public settings
+app.get('/api/settings', async (req, res) => {
+    try {
+        const [rows] = await pool.execute('SELECT key_name, value FROM settings');
+        const settings = {};
+        rows.forEach(r => settings[r.key_name] = r.value);
+        res.json(settings);
+    } catch { res.status(500).json({ error: 'Server error' }); }
+});
+
+// Update setting (admin)
+app.post('/api/admin/settings', adminMiddleware, async (req, res) => {
+    try {
+        const { key_name, value } = req.body;
+        if (!key_name) return res.status(400).json({ error: 'key_name required' });
+        await pool.execute(
+            'INSERT INTO settings (key_name, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?',
+            [key_name, value, value]
+        );
+        res.json({ success: true });
+    } catch { res.status(500).json({ error: 'Server error' }); }
+});
+
+// Upload logo specifically (admin)
+app.post('/api/admin/settings/logo', adminMiddleware, upload.single('image'), async (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    const url = `/uploads/${req.file.filename}`;
+    try {
+        await pool.execute(
+            'INSERT INTO settings (key_name, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE value = ?',
+            ['site_logo', url, url]
+        );
+        res.json({ url });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
 });
 
 // ============================================================

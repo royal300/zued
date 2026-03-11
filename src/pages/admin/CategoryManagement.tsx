@@ -74,7 +74,6 @@ const CategoryManagement = () => {
                         className="bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60"
                     >
                         <option value="all">All</option>
-                        <option value="tshirt">T-Shirt</option>
                         <option value="jewellery">Jewellery</option>
                     </select>
                     <button type="submit" disabled={saving} className="btn-gold rounded-sm py-2 text-sm flex items-center justify-center gap-2">

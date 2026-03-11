@@ -14,9 +14,21 @@ const Header = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const userMenuRef = useRef<HTMLDivElement>(null);
 
+  const [dynamicLogo, setDynamicLogo] = useState<string | null>(null);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
+
+    // Fetch settings for dynamic logo
+    fetch('/api/settings')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => {
+        const settings = d as any;
+        if (settings.site_logo) setDynamicLogo(settings.site_logo);
+      })
+      .catch(() => { });
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -33,12 +45,21 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', to: '/' },
-    { label: 'T-Shirts', to: '/tshirts' },
-    { label: 'Jewellery', to: '/jewellery' },
-    { label: 'Contact', to: '#contact' },
+    { label: 'Ring', to: '/?category=Ring' },
+    { label: 'Bracelet', to: '/?category=Bracelet' },
+    { label: 'Earring', to: '/?category=Earring' },
+    { label: 'Wrestlet', to: '/?category=Wrestlet' },
+    { label: 'Chain', to: '/?category=Chain' },
+    { label: 'Contact Us', to: '#contact' },
   ];
 
-  const isActive = (to: string) => location.pathname === to;
+  const isActive = (to: string) => {
+    if (to === '#contact') return false; // Handled by standard scroll
+    if (to.includes('?')) {
+      return location.pathname + location.search === to;
+    }
+    return location.pathname === to && location.search === '';
+  };
 
   const handleLogout = () => {
     logout();
@@ -48,21 +69,18 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-        ? 'bg-background/90 backdrop-blur-xl border-b border-border shadow-[0_4px_30px_rgba(0,0,0,0.5)]'
-        : 'bg-transparent'
-        }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-background/30 backdrop-blur-md border-b border-white/5`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 lg:h-28">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group shrink-0">
             <img
-              src="/zued-logo.png"
+              src="/zued_main_logo.png"
               alt="ZUED - Wear The Difference"
-              className="h-20 sm:h-24 lg:h-32 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
-              width={340}
-              height={170}
+              className="h-8 sm:h-10 lg:h-12 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
+              width={156}
+              height={52}
               fetchPriority="high"
             />
           </Link>

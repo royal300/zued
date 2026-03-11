@@ -1,16 +1,33 @@
 import { Link } from 'react-router-dom';
 import { MessageCircle, Instagram } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import { useState, useEffect } from 'react';
+import staticLogo from '@/assets/logo.png';
 
 const Footer = () => {
+  const [dynamicLogo, setDynamicLogo] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(r => r.ok ? r.json() : {})
+      .then(d => {
+        const settings = d as any;
+        if (settings.site_logo) setDynamicLogo(settings.site_logo);
+      })
+      .catch(() => { });
+  }, []);
+
   return (
     <footer id="contact" className="bg-background border-t border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="flex flex-col gap-4">
-            <img src={logo} alt="ZUED" className="h-14 w-auto object-contain" />
+            <img
+              src="/zued_main_logo.png"
+              alt="ZUED"
+              className="h-10 sm:h-12 w-auto object-contain object-left"
+            />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-              Premium print-on-demand tees & anti-tarnish jewellery. Crafted for those who refuse to blend in.
+              Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
             </p>
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-semibold">
               Wear The Difference.
@@ -22,8 +39,11 @@ const Footer = () => {
             <nav className="flex flex-col gap-3">
               {[
                 { label: 'Home', to: '/' },
-                { label: 'T-Shirts', to: '/tshirts' },
-                { label: 'Jewellery', to: '/jewellery' },
+                { label: 'Ring', to: '/?category=Ring' },
+                { label: 'Bracelet', to: '/?category=Bracelet' },
+                { label: 'Earring', to: '/?category=Earring' },
+                { label: 'Wrestlet', to: '/?category=Wrestlet' },
+                { label: 'Chain', to: '/?category=Chain' },
               ].map((link) => (
                 <Link
                   key={link.label}

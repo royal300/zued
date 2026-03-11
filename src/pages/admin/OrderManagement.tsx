@@ -51,7 +51,6 @@ const OrderManagement = () => {
                     <select value={typeFilter} onChange={e => setTypeFilter(e.target.value)}
                         className="bg-secondary border border-border rounded-sm px-3 py-1.5 text-xs text-foreground focus:outline-none focus:border-gold/60">
                         <option value="">All Types</option>
-                        <option value="tshirt">T-Shirts</option>
                         <option value="jewellery">Jewellery</option>
                         <option value="mixed">Mixed</option>
                     </select>

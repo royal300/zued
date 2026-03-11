@@ -9,8 +9,6 @@ import { AdminAuthProvider } from "@/context/AdminAuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AdminRoute from "@/components/admin/AdminRoute";
 import Landing from "./pages/Landing";
-import TShirts from "./pages/TShirts";
-import TShirtDetail from "./pages/TShirtDetail";
 import Jewellery from "./pages/Jewellery";
 import JewelleryDetail from "./pages/JewelleryDetail";
 import Cart from "./pages/Cart";
@@ -24,9 +22,9 @@ import Dashboard from "./pages/admin/Dashboard";
 import OrderManagement from "./pages/admin/OrderManagement";
 import CategoryManagement from "./pages/admin/CategoryManagement";
 import ProductManagement from "./pages/admin/ProductManagement";
-import AddTshirt from "./pages/admin/AddTshirt";
 import AddJewellery from "./pages/admin/AddJewellery";
 import PromoManagement from "./pages/admin/PromoManagement";
+import Settings from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -41,10 +39,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 {/* Customer routes */}
-                <Route path="/" element={<Landing />} />
-                <Route path="/tshirts" element={<TShirts />} />
-                <Route path="/tshirts/:id" element={<TShirtDetail />} />
-                <Route path="/jewellery" element={<Jewellery />} />
+                <Route path="/" element={<Jewellery />} />
                 <Route path="/jewellery/:id" element={<JewelleryDetail />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
@@ -58,9 +53,10 @@ const App = () => (
                   <Route path="orders" element={<OrderManagement />} />
                   <Route path="categories" element={<CategoryManagement />} />
                   <Route path="products/:type" element={<ProductManagement />} />
-                  <Route path="products/:type/add" element={<AddTshirt />} />
-                  <Route path="products/:type/edit/:id" element={<AddTshirt />} />
+                  <Route path="products/:type/add" element={<AddJewellery />} />
+                  <Route path="products/:type/edit/:id" element={<AddJewellery />} />
                   <Route path="promos" element={<PromoManagement />} />
+                  <Route path="settings" element={<Settings />} />
                 </Route>
 
                 <Route path="*" element={<NotFound />} />

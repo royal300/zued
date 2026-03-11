@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { jewelleryProducts } from '@/data/products';
 import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
@@ -6,11 +7,13 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 const Jewellery = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initCat = searchParams.get('category') || 'All';
+  const [activeCategory, setActiveCategory] = useState(initCat);
   const [apiProducts, setApiProducts] = useState<any[]>([]);
   const [apiCategories, setApiCategories] = useState<any[]>([]);
 
-  const staticCats = ['All', 'Earrings', 'Rings', 'Chains', 'Pendants'];
+  const staticCats = ['All', 'Ring', 'Bracelet', 'Earring', 'Wrestlet', 'Chain'];
 
   useEffect(() => {
     fetch('/api/products?type=jewellery')
@@ -20,9 +23,22 @@ const Jewellery = () => {
 
     fetch('/api/categories')
       .then(r => r.ok ? r.json() : [])
-      .then(d => setApiCategories(Array.isArray(d) ? d : []))
       .catch(() => { });
   }, []);
+
+  useEffect(() => {
+    const cat = searchParams.get('category') || 'All';
+    setActiveCategory(cat);
+  }, [searchParams]);
+
+  const handleCategoryClick = (cat: string) => {
+    setActiveCategory(cat);
+    if (cat === 'All') {
+      setSearchParams(new URLSearchParams());
+    } else {
+      setSearchParams({ category: cat });
+    }
+  };
 
   const apiCatNames = apiCategories
     .filter(c => c.product_type === 'jewellery' || c.product_type === 'all')
@@ -74,7 +90,7 @@ const Jewellery = () => {
             {allCategories.map((cat) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryClick(cat)}
                 className={`px-5 py-2 rounded-sm text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 ${activeCategory === cat ? 'btn-gold' : 'btn-outline-gold'
                   }`}
               >

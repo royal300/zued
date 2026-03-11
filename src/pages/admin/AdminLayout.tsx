@@ -1,15 +1,15 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/context/AdminAuthContext';
-import { LayoutDashboard, Package, ShoppingBag, Tag, Ticket, LogOut, Shirt, Gem, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, ShoppingBag, Tag, Ticket, LogOut, Gem, Menu, X, Settings as SettingsIcon } from 'lucide-react';
 import { useState } from 'react';
 
 const navItems = [
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { to: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
     { to: '/admin/categories', icon: Tag, label: 'Categories' },
-    { to: '/admin/products/tshirts', icon: Shirt, label: 'T-Shirts' },
     { to: '/admin/products/jewellery', icon: Gem, label: 'Jewellery' },
     { to: '/admin/promos', icon: Ticket, label: 'Promo Codes' },
+    { to: '/admin/settings', icon: SettingsIcon, label: 'Settings' },
 ];
 
 const AdminLayout = () => {

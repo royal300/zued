@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { adminFetch } from '@/context/AdminAuthContext';
-import { TrendingUp, ShoppingBag, Shirt, Gem, Loader2 } from 'lucide-react';
+import { TrendingUp, ShoppingBag, Gem, Loader2 } from 'lucide-react';
 
 const Dashboard = () => {
     const [data, setData] = useState<any>(null);
@@ -49,7 +49,6 @@ const Dashboard = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {[
                             { label: 'Total Orders', count: data.total.count, revenue: data.total.revenue, icon: TrendingUp, color: 'text-gold' },
-                            { label: 'T-Shirt Orders', count: data.tshirt.count, revenue: data.tshirt.revenue, icon: Shirt, color: 'text-blue-400' },
                             { label: 'Jewellery Orders', count: data.jewellery.count, revenue: data.jewellery.revenue, icon: Gem, color: 'text-purple-400' },
                         ].map(stat => (
                             <div key={stat.label} className="glass-card rounded-sm p-5 border border-border/60">

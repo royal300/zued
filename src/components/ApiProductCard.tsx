@@ -10,11 +10,11 @@ interface Props {
         badge?: string;
         category_name?: string;
     };
-    type: 'tshirt' | 'jewellery';
+    type?: 'tshirt' | 'jewellery'; // kept for backward compatibility if passed, but ignored
 }
 
 const ApiProductCard = ({ product, type }: Props) => {
-    const href = type === 'tshirt' ? `/tshirts/api-${product.id}` : `/jewellery/api-${product.id}`;
+    const href = `/jewellery/api-${product.id}`;
     const imageUrl = product.images?.[0]
         ? product.images[0].startsWith('http') || product.images[0].startsWith('/uploads')
             ? product.images[0]
