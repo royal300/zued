@@ -83,6 +83,57 @@ const Jewellery = () => {
         </div>
       </section>
 
+      {/* Promotional Banners */}
+      <section className="px-4 mb-16">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
+            {/* Banner 1 - Rings */}
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden group shadow-lg">
+              <img
+                src="/rings-banner.png"
+                alt="Rings Collection"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-background/20 group-hover:bg-background/10 transition-colors duration-500" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-gradient-to-t from-background/90 via-background/40 to-transparent">
+                <span className="text-foreground tracking-[0.3em] text-xs font-bold uppercase mb-2">Exclusive Rings</span>
+                <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl text-gold mb-2 drop-shadow-md">
+                  10% DISCOUNT
+                </h3>
+                <p className="text-foreground/90 text-sm sm:text-base font-medium max-w-[80%] drop-shadow-sm">
+                  on purchases above ₹299/-
+                </p>
+                <button className="mt-4 px-6 py-2 bg-foreground text-background text-xs tracking-widest uppercase font-bold hover:bg-gold transition-colors duration-300">
+                  Shop Now
+                </button>
+              </div>
+            </div>
+
+            {/* Banner 2 - Bangles & Bracelets */}
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden group shadow-lg">
+              <img
+                src="/bangles-banner.png"
+                alt="Bangles Collection"
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-background/20 group-hover:bg-background/10 transition-colors duration-500" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-gradient-to-t from-background/90 via-background/40 to-transparent">
+                <span className="text-foreground tracking-[0.3em] text-xs font-bold uppercase mb-2">Bangles & Wrestlets</span>
+                <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl text-gold mb-2 drop-shadow-md">
+                  FLAT 20% OFF
+                </h3>
+                <p className="text-foreground/90 text-sm sm:text-base font-medium max-w-[80%] drop-shadow-sm">
+                  on purchases above ₹1000/-
+                </p>
+                <button className="mt-4 px-6 py-2 bg-foreground text-background text-xs tracking-widest uppercase font-bold hover:bg-gold transition-colors duration-300">
+                  Shop Now
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Category Filter */}
       <section className="px-4 mb-10">
         <div className="max-w-7xl mx-auto">

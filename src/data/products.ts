@@ -1,7 +1,7 @@
 export interface JewelleryProduct {
   id: string;
   name: string;
-  category: 'Earrings' | 'Rings' | 'Chains' | 'Pendants';
+  category: 'Ring' | 'Bracelet' | 'Earring' | 'Wrestlet' | 'Chain';
   price: string;
   image: string;
   gallery: string[];
@@ -25,7 +25,7 @@ export const jewelleryProducts: JewelleryProduct[] = [
   {
     id: 'jw-001',
     name: 'Soleil Diamond Studs',
-    category: 'Earrings',
+    category: 'Earring',
     price: '₹2,499',
     image: '/jewellery-images/1',
     gallery: ['/jewellery-images/1', '/jewellery-images/2', '/jewellery-images/5'],
@@ -35,7 +35,7 @@ export const jewelleryProducts: JewelleryProduct[] = [
   {
     id: 'jw-002',
     name: 'Monarch Signet Ring',
-    category: 'Rings',
+    category: 'Ring',
     price: '₹3,299',
     image: '/jewellery-images/2',
     gallery: ['/jewellery-images/2', '/jewellery-images/3', '/jewellery-images/1'],
@@ -45,7 +45,7 @@ export const jewelleryProducts: JewelleryProduct[] = [
   {
     id: 'jw-003',
     name: 'Cuban Link Chain',
-    category: 'Chains',
+    category: 'Chain',
     price: '₹4,999',
     image: '/jewellery-images/3',
     gallery: ['/jewellery-images/3', '/jewellery-images/4', '/jewellery-images/2'],
@@ -54,18 +54,18 @@ export const jewelleryProducts: JewelleryProduct[] = [
   },
   {
     id: 'jw-004',
-    name: 'Lion King Pendant',
-    category: 'Pendants',
+    name: 'Lion King Bracelet',
+    category: 'Bracelet',
     price: '₹2,799',
     image: '/jewellery-images/4',
     gallery: ['/jewellery-images/4', '/jewellery-images/5', '/jewellery-images/3'],
-    description: 'Hand-crafted lion head pendant in gleaming gold. Symbol of strength and luxury.',
+    description: 'Hand-crafted lion head charm on an elegant gold bracelet. Symbol of strength and luxury.',
     badge: 'LIMITED',
   },
   {
     id: 'jw-005',
     name: 'Aurum Hoop Earrings',
-    category: 'Earrings',
+    category: 'Earring',
     price: '₹1,899',
     image: '/jewellery-images/5',
     gallery: ['/jewellery-images/5', '/jewellery-images/1', '/jewellery-images/4'],
@@ -74,7 +74,7 @@ export const jewelleryProducts: JewelleryProduct[] = [
   {
     id: 'jw-006',
     name: 'Crescent Moon Ring',
-    category: 'Rings',
+    category: 'Ring',
     price: '₹2,199',
     image: '/jewellery-images/2',
     gallery: ['/jewellery-images/2', '/jewellery-images/5', '/jewellery-images/3'],
@@ -84,7 +84,7 @@ export const jewelleryProducts: JewelleryProduct[] = [
   {
     id: 'jw-007',
     name: 'Serpent Chain',
-    category: 'Chains',
+    category: 'Chain',
     price: '₹3,799',
     image: '/jewellery-images/3',
     gallery: ['/jewellery-images/3', '/jewellery-images/1', '/jewellery-images/4'],
@@ -92,11 +92,11 @@ export const jewelleryProducts: JewelleryProduct[] = [
   },
   {
     id: 'jw-008',
-    name: 'Cross Pendant',
-    category: 'Pendants',
+    name: 'Gold Plated Wrestlet',
+    category: 'Wrestlet',
     price: '₹1,999',
     image: '/jewellery-images/4',
     gallery: ['/jewellery-images/4', '/jewellery-images/2', '/jewellery-images/5'],
-    description: 'Classic gold cross pendant with refined detailing. Faith meets fashion.',
+    description: 'Classic gold-plated wrestlet with refined luxury detailing. Handcrafted elegance.',
   },
 ];
