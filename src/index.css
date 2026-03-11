@@ -7,26 +7,29 @@
 @layer base {
   :root {
     /* Core */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 4%;
+    --background: 174 72% 56%;
+    /* Firoza */
+    --foreground: 0 0% 15%;
+    /* Dark text for contrast */
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 4%;
+    --card: 174 72% 48%;
+    /* Slightly darker firoza for cards */
+    --card-foreground: 0 0% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
+    --popover: 174 72% 56%;
+    --popover-foreground: 0 0% 15%;
 
-    /* Firoza as primary (#40E0D0 is HSL 174, 72%, 56%) */
-    --primary: 174 72% 56%;
+    --primary: 43 74% 49%;
+    /* Changed primary to yellow/gold */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 4%;
+    --secondary: 174 72% 42%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 174 72% 42%;
+    --muted-foreground: 174 20% 25%;
 
-    --accent: 174 72% 56%;
+    --accent: 43 74% 49%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
@@ -76,7 +79,10 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  h1, h2, h3, .font-display {
+  h1,
+  h2,
+  h3,
+  .font-display {
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 0.05em;
   }
@@ -167,7 +173,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%);
+    background: linear-gradient(135deg, transparent 40%, rgba(255, 255, 255, 0.2) 50%, transparent 60%);
     transform: translateX(-100%);
     transition: transform 0.5s ease;
   }
@@ -204,7 +210,7 @@
 
   .product-card-hover:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), var(--shadow-gold-sm);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), var(--shadow-gold-sm);
   }
 
   .product-card-hover:hover .product-img {
@@ -217,8 +223,13 @@
 }
 
 @keyframes shimmer {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: 0% center;
+  }
+
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes fadeInUp {
@@ -226,6 +237,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -233,8 +245,13 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes scaleIn {
@@ -242,6 +259,7 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -260,23 +278,40 @@
   animation: scaleIn 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-400 {
+  animation-delay: 0.4s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
 
 /* Scrollbar */
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: hsl(var(--background));
 }
+
 ::-webkit-scrollbar-thumb {
   background: hsl(var(--gold) / 0.4);
   border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--gold));
 }
