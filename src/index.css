@@ -19,9 +19,9 @@
     --popover: 174 72% 56%;
     --popover-foreground: 0 0% 15%;
 
-    --primary: 43 74% 49%;
-    /* Changed primary to yellow/gold */
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    /* Changed primary to white */
+    --primary-foreground: 174 72% 56%;
 
     --secondary: 174 72% 42%;
     --secondary-foreground: 0 0% 100%;
@@ -29,8 +29,8 @@
     --muted: 174 72% 42%;
     --muted-foreground: 174 20% 25%;
 
-    --accent: 43 74% 49%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 100%;
+    --accent-foreground: 174 72% 56%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -52,19 +52,22 @@
     --sidebar-ring: 174 72% 56%;
 
     /* Custom luxury tokens */
-    --gold: 43 74% 49%;
-    --gold-light: 45 90% 65%;
-    --gold-dark: 40 60% 35%;
+    --gold: 0 0% 100%;
+    /* White */
+    --gold-light: 0 0% 98%;
+    /* Off-white */
+    --gold-dark: 0 0% 85%;
+    /* Light silver */
     --obsidian: 0 0% 100%;
     --obsidian-card: 0 0% 98%;
     --obsidian-surface: 0 0% 96%;
 
-    --gradient-gold: linear-gradient(135deg, hsl(40, 60%, 35%), hsl(43, 74%, 49%), hsl(45, 90%, 65%), hsl(43, 74%, 49%), hsl(40, 60%, 35%));
-    --gradient-gold-simple: linear-gradient(135deg, hsl(40, 60%, 42%), hsl(45, 90%, 65%));
+    --gradient-gold: linear-gradient(135deg, hsl(0, 0%, 85%), hsl(0, 0%, 100%), hsl(0, 0%, 98%), hsl(0, 0%, 100%), hsl(0, 0%, 85%));
+    --gradient-gold-simple: linear-gradient(135deg, hsl(0, 0%, 90%), hsl(0, 0%, 100%));
     --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 4%), hsl(0, 0%, 7%));
-    --shadow-gold: 0 0 30px hsl(43, 74%, 49% / 0.4), 0 0 60px hsl(43, 74%, 49% / 0.2);
-    --shadow-gold-sm: 0 0 15px hsl(43, 74%, 49% / 0.3);
-    --glow-gold: 0 0 20px hsl(43, 74%, 49% / 0.5);
+    --shadow-gold: 0 0 30px hsl(0, 0%, 100% / 0.4), 0 0 60px hsl(0, 0%, 100% / 0.2);
+    --shadow-gold-sm: 0 0 15px hsl(0, 0%, 100% / 0.3);
+    --glow-gold: 0 0 20px hsl(0, 0%, 100% / 0.5);
   }
 }
 
@@ -158,7 +161,8 @@
 
   .btn-gold {
     background: var(--gradient-gold-simple);
-    color: hsl(0 0% 4%);
+    color: hsl(174 72% 40%);
+    /* Darker firoza for text contrast on white */
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 0.8rem;
