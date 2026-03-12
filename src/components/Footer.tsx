@@ -22,9 +22,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="flex flex-col gap-4">
             <img
-              src="/zued_main_logo.png?v=1.1"
+              src="/zued_logo_big.png?v=1.1"
               alt="ZUED"
-              className="h-20 sm:h-24 w-auto object-contain object-left"
+              className="h-12 sm:h-14 w-auto object-contain object-left"
             />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
               Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
@@ -68,8 +68,8 @@ const Footer = () => {
               </div>
             </a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-sm bg-secondary border border-border flex items-center justify-center flex-shrink-0 group-hover:border-gold group-hover:shadow-[0_0_15px_hsl(43,74%,49%,0.3)] transition-all duration-300">
-                <Instagram size={18} className="text-foreground/70 group-hover:text-gold transition-colors" />
+              <div className="w-10 h-10 rounded-sm gradient-gold-bg flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_0_20px_hsl(43,74%,49%,0.5)] transition-all duration-300">
+                <Instagram size={18} className="text-background" />
               </div>
               <div>
                 <p className="text-foreground text-sm font-semibold">Instagram</p>
