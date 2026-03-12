@@ -92,8 +92,8 @@ const JewelleryDetail = () => {
                       <img src={getProductImage(img)} alt="" className="w-full h-full object-cover" />
                     </button>
                   ))}
-                  <button onClick={() => setShowVideo(true)} className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all relative bg-secondary flex items-center justify-center ${showVideo ? 'border-gold' : 'border-border hover:border-gold/50'}`}>
-                    <Play size={20} className="text-gold" fill="currentColor" />
+                  <button onClick={() => setShowVideo(true)} className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all relative bg-white flex items-center justify-center ${showVideo ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}>
+                    <Play size={20} className="text-black" fill="currentColor" />
                   </button>
                 </div>
               </div>

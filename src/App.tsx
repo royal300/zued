@@ -8,6 +8,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { AdminAuthProvider } from "@/context/AdminAuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AdminRoute from "@/components/admin/AdminRoute";
+import ScrollToTop from "@/components/ScrollToTop";
 import Landing from "./pages/Landing";
 import Jewellery from "./pages/Jewellery";
 import JewelleryDetail from "./pages/JewelleryDetail";
@@ -37,6 +38,7 @@ const App = () => (
             <Toaster />
             <Sonner />
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 {/* Customer routes */}
                 <Route path="/" element={<Jewellery />} />
