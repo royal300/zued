@@ -7,67 +7,60 @@
 @layer base {
   :root {
     /* Core */
-    --background: 174 72% 56%;
-    /* Firoza */
-    --foreground: 0 0% 15%;
-    /* Dark text for contrast */
+    --background: 28 100% 75%; /* Peach (#ffbb7e) */
+    --foreground: 344 30% 15%; /* Dark pink-ish for contrast */
 
-    --card: 174 72% 48%;
-    /* Slightly darker firoza for cards */
-    --card-foreground: 0 0% 15%;
+    --card: 28 100% 70%; /* Slightly darker peach for cards */
+    --card-foreground: 344 30% 15%;
 
-    --popover: 174 72% 56%;
-    --popover-foreground: 0 0% 15%;
+    --popover: 28 100% 75%;
+    --popover-foreground: 344 30% 15%;
 
-    --primary: 0 0% 100%;
-    /* Changed primary to white */
-    --primary-foreground: 174 72% 56%;
+    --primary: 344 100% 65%; /* Pink (#ff4e7d) */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 174 72% 42%;
+    --secondary: 344 100% 55%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 174 72% 42%;
-    --muted-foreground: 174 20% 25%;
+    --muted: 28 80% 65%;
+    --muted-foreground: 344 20% 40%;
 
-    --accent: 0 0% 100%;
-    --accent-foreground: 174 72% 56%;
+    --accent: 344 100% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 174 72% 56%;
+    --border: 344 20% 60%;
+    --input: 344 20% 60%;
+    --ring: 344 100% 65%;
 
     --radius: 0.75rem;
 
     /* Sidebar (unused but required) */
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 0 0% 4%;
-    --sidebar-primary: 174 72% 56%;
+    --sidebar-background: 28 100% 75%;
+    --sidebar-foreground: 344 30% 15%;
+    --sidebar-primary: 344 100% 65%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 96%;
-    --sidebar-accent-foreground: 0 0% 4%;
-    --sidebar-border: 0 0% 90%;
-    --sidebar-ring: 174 72% 56%;
+    --sidebar-accent: 28 100% 70%;
+    --sidebar-accent-foreground: 344 30% 15%;
+    --sidebar-border: 344 20% 60%;
+    --sidebar-ring: 344 100% 65%;
 
     /* Custom luxury tokens */
-    --gold: 0 0% 100%;
-    /* White */
-    --gold-light: 0 0% 98%;
-    /* Off-white */
-    --gold-dark: 0 0% 85%;
-    /* Light silver */
-    --obsidian: 0 0% 100%;
-    --obsidian-card: 0 0% 98%;
-    --obsidian-surface: 0 0% 96%;
+    --gold: 344 100% 65%; /* Pink (#ff4e7d) */
+    --gold-light: 344 100% 75%;
+    --gold-dark: 344 80% 45%;
+    --obsidian: 344 30% 10%;
+    --obsidian-card: 344 30% 15%;
+    --obsidian-surface: 344 30% 20%;
 
-    --gradient-gold: linear-gradient(135deg, hsl(0, 0%, 85%), hsl(0, 0%, 100%), hsl(0, 0%, 98%), hsl(0, 0%, 100%), hsl(0, 0%, 85%));
-    --gradient-gold-simple: linear-gradient(135deg, hsl(0, 0%, 90%), hsl(0, 0%, 100%));
-    --gradient-dark: linear-gradient(180deg, hsl(0, 0%, 4%), hsl(0, 0%, 7%));
-    --shadow-gold: 0 0 30px hsl(0, 0%, 100% / 0.4), 0 0 60px hsl(0, 0%, 100% / 0.2);
-    --shadow-gold-sm: 0 0 15px hsl(0, 0%, 100% / 0.3);
-    --glow-gold: 0 0 20px hsl(0, 0%, 100% / 0.5);
+    --gradient-gold: linear-gradient(135deg, hsl(344, 80%, 45%), hsl(344, 100%, 65%), hsl(344, 100%, 75%), hsl(344, 100%, 65%), hsl(344, 80%, 45%));
+    --gradient-gold-simple: linear-gradient(135deg, hsl(344, 100%, 55%), hsl(344, 100%, 75%));
+    --gradient-dark: linear-gradient(180deg, hsl(344, 30%, 5%), hsl(344, 30%, 15%));
+    --shadow-gold: 0 0 30px hsl(344, 100%, 65% / 0.4), 0 0 60px hsl(344, 100%, 65% / 0.2);
+    --shadow-gold-sm: 0 0 15px hsl(344, 100%, 65% / 0.3);
+    --glow-gold: 0 0 20px hsl(344, 100%, 65% / 0.5);
   }
 }
 
@@ -161,8 +154,7 @@
 
   .btn-gold {
     background: var(--gradient-gold-simple);
-    color: hsl(174 72% 40%);
-    /* Darker firoza for text contrast on white */
+    color: #fff;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     font-size: 0.8rem;
