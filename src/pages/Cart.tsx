@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Trash2, Plus, Minus, ShoppingBag } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, MessageCircle } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { getProductImage } from '@/components/ProductCard';
 import Header from '@/components/Header';
@@ -94,12 +94,15 @@ const Cart = () => {
               <span className="text-foreground font-semibold text-sm uppercase tracking-wider">Total</span>
               <span className="gold-gradient-text font-display text-3xl">₹{totalPrice.toLocaleString()}</span>
             </div>
-            <Link
-              to="/checkout"
+            <button
+              onClick={() => {
+                const message = `Hello, I would like to order the following items from ZUED:\n\n${items.map(i => `- ${i.name} (x${i.quantity}) - ₹${(i.price * i.quantity).toLocaleString()}`).join('\n')}\n\nTotal Amount: ₹${totalPrice.toLocaleString()}\n\nPlease confirm availability. Thank you!`;
+                window.open(`https://wa.me/918617201731?text=${encodeURIComponent(message)}`, '_blank');
+              }}
               className="btn-gold flex items-center justify-center gap-3 py-4 rounded-sm text-sm w-full"
             >
-              Proceed to Checkout
-            </Link>
+              <MessageCircle size={18} /> Order via WhatsApp — ₹{totalPrice.toLocaleString()}
+            </button>
           </div>
         </div>
       </main>

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { MessageCircle, Instagram } from 'lucide-react';
+import { MessageCircle, Instagram, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import staticLogo from '@/assets/logo.png';
 
@@ -44,6 +44,7 @@ const Footer = () => {
                 { label: 'Earring', to: '/?category=Earring' },
                 { label: 'Wrestlet', to: '/?category=Wrestlet' },
                 { label: 'Chain', to: '/?category=Chain' },
+                { label: 'Contact Us', to: '/contact' },
               ].map((link) => (
                 <Link
                   key={link.label}
@@ -74,6 +75,15 @@ const Footer = () => {
               <div>
                 <p className="text-foreground text-sm font-semibold">Instagram</p>
                 <p className="text-muted-foreground text-xs">@zued.official</p>
+              </div>
+            </a>
+            <a href="mailto:zued.jewels@gmail.com" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 rounded-sm gradient-gold-bg flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_0_20px_hsl(43,74%,49%,0.5)] transition-all duration-300">
+                <Mail size={18} className="text-background" />
+              </div>
+              <div>
+                <p className="text-foreground text-sm font-semibold">Email</p>
+                <p className="text-muted-foreground text-xs">zued.jewels@gmail.com</p>
               </div>
             </a>
           </div>

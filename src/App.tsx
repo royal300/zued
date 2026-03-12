@@ -15,6 +15,7 @@ import JewelleryDetail from "./pages/JewelleryDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
+import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 // Admin
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -43,9 +44,9 @@ const App = () => (
                 {/* Customer routes */}
                 <Route path="/" element={<Jewellery />} />
                 <Route path="/jewellery/:id" element={<JewelleryDetail />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
-                <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
 
                 {/* Admin routes */}
                 <Route path="/admin/login" element={<AdminLogin />} />

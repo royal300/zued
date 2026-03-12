@@ -1,46 +1,18 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
-import { Menu, X, ShoppingCart, User, LogOut, ChevronDown } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Menu, X, ShoppingCart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const { totalItems } = useCart();
-  const { isAuthenticated, user, logout } = useAuth();
-  const userMenuRef = useRef<HTMLDivElement>(null);
-
-  const [dynamicLogo, setDynamicLogo] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
-
-    // Fetch settings for dynamic logo
-    fetch('/api/settings')
-      .then(r => r.ok ? r.json() : {})
-      .then(d => {
-        const settings = d as any;
-        if (settings.site_logo) setDynamicLogo(settings.site_logo);
-      })
-      .catch(() => { });
-
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Close user dropdown on outside click
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
-        setUserMenuOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClick);
-    return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
   const navLinks = [
@@ -50,21 +22,14 @@ const Header = () => {
     { label: 'Earring', to: '/?category=Earring' },
     { label: 'Wrestlet', to: '/?category=Wrestlet' },
     { label: 'Chain', to: '/?category=Chain' },
-    { label: 'Contact Us', to: '#contact' },
+    { label: 'Contact Us', to: '/contact' },
   ];
 
   const isActive = (to: string) => {
-    if (to === '#contact') return false; // Handled by standard scroll
     if (to.includes('?')) {
       return location.pathname + location.search === to;
     }
     return location.pathname === to && location.search === '';
-  };
-
-  const handleLogout = () => {
-    logout();
-    setUserMenuOpen(false);
-    navigate('/');
   };
 
   return (
@@ -103,7 +68,7 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Right side: Cart + Auth */}
+          {/* Right side: Cart */}
           <div className="flex items-center gap-3">
             {/* Cart */}
             <Link
@@ -113,48 +78,11 @@ const Header = () => {
               <ShoppingCart size={14} />
               <span className="hidden md:inline">Cart</span>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-destructive text-foreground text-[10px] font-bold flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center shadow-md">
                   {totalItems}
                 </span>
               )}
             </Link>
-
-            {/* Auth button */}
-            {isAuthenticated ? (
-              <div className="relative" ref={userMenuRef}>
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="hidden md:flex items-center gap-2 text-xs text-foreground/80 hover:text-gold border border-border hover:border-gold/40 px-3 py-2 rounded-sm transition-all duration-300"
-                >
-                  <User size={13} />
-                  <span className="max-w-[100px] truncate">{user?.name || user?.email}</span>
-                  <ChevronDown size={11} className={`transition-transform duration-200 ${userMenuOpen ? 'rotate-180' : ''}`} />
-                </button>
-                {userMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-background/95 backdrop-blur-xl border border-border rounded-sm shadow-xl animate-fade-in">
-                    <div className="px-4 py-3 border-b border-border">
-                      <p className="text-xs text-muted-foreground">Signed in as</p>
-                      <p className="text-sm text-foreground truncate mt-0.5">{user?.email}</p>
-                    </div>
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-4 py-3 text-xs text-foreground/70 hover:text-destructive hover:bg-destructive/5 transition-colors"
-                    >
-                      <LogOut size={13} />
-                      Sign Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                to="/login"
-                className="hidden md:flex items-center gap-2 text-xs text-foreground/70 hover:text-gold border border-border hover:border-gold/40 px-3 py-2 rounded-sm transition-all duration-300"
-              >
-                <User size={13} />
-                Sign In
-              </Link>
-            )}
 
             {/* Mobile Toggle */}
             <button
@@ -182,24 +110,6 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
-            {isAuthenticated ? (
-              <button
-                onClick={() => { handleLogout(); setMobileOpen(false); }}
-                className="flex items-center gap-2 text-sm text-foreground/70 hover:text-destructive py-2 transition-colors w-full"
-              >
-                <LogOut size={14} />
-                Sign Out ({user?.name || user?.email})
-              </button>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-2 text-sm text-foreground/70 hover:text-gold py-2 transition-colors"
-              >
-                <User size={14} />
-                Sign In
-              </Link>
-            )}
           </div>
         </div>
       )}
