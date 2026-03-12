@@ -24,7 +24,12 @@ const AdminLayout = () => {
             {/* Sidebar */}
             <aside className={`${sidebarOpen ? 'w-56' : 'w-14'} transition-all duration-300 bg-background border-r border-border flex flex-col flex-shrink-0`}>
                 <div className="h-16 flex items-center justify-between px-4 border-b border-border">
-                    {sidebarOpen && <span className="font-display text-gold tracking-widest text-sm">ZUED ADMIN</span>}
+                    {sidebarOpen && (
+                        <div className="flex items-center gap-2 overflow-hidden">
+                            <img src="/zued_main_logo.png" alt="ZUED Logo" className="h-8 w-auto object-contain" />
+                            <span className="font-display text-gold tracking-widest text-[10px] whitespace-nowrap">ADMIN PANEL</span>
+                        </div>
+                    )}
                     <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-muted-foreground hover:text-foreground transition-colors ml-auto">
                         {sidebarOpen ? <X size={18} /> : <Menu size={18} />}
                     </button>
