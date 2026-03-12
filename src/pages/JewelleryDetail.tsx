@@ -40,7 +40,7 @@ const JewelleryDetail = () => {
 
   if (apiLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <Loader2 size={32} className="animate-spin text-gold" />
       </div>
     );
@@ -48,7 +48,7 @@ const JewelleryDetail = () => {
 
   if (!staticProduct && !apiProduct) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <p className="text-muted-foreground mb-4">Product not found</p>
           <Link to="/jewellery" className="btn-gold px-6 py-3 rounded-sm text-sm">Back to Jewellery</Link>
@@ -68,7 +68,7 @@ const JewelleryDetail = () => {
     };
 
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-white">
         <Header />
         <main className="pt-24 pb-20 px-4">
           <div className="max-w-5xl mx-auto">
@@ -144,7 +144,7 @@ const JewelleryDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-white">
       <Header />
       <main className="pt-24 pb-20 px-4">
         <div className="max-w-5xl mx-auto">

@@ -61,11 +61,11 @@ const Jewellery = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
+      <section className="relative pt-44 pb-16 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-gold/5 to-transparent pointer-events-none" />
         <div className="absolute top-20 left-0 w-72 h-72 rounded-full bg-gold/8 blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-4 animate-fade-in">
+          <p className="text-black text-[10px] tracking-[0.5em] uppercase mb-4 animate-fade-in font-bold">
             Luxury Collection
           </p>
           <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl text-foreground tracking-wider animate-fade-in-up">
