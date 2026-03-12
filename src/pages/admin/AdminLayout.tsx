@@ -26,7 +26,7 @@ const AdminLayout = () => {
                 <div className="h-16 flex items-center justify-between px-4 border-b border-border">
                     {sidebarOpen && (
                         <div className="flex items-center gap-2 overflow-hidden">
-                            <img src="/zued_main_logo.png" alt="ZUED Logo" className="h-8 w-auto object-contain" />
+                            <img src="/zued_main_logo.png?v=1.1" alt="ZUED Logo" className="h-14 w-auto object-contain" />
                             <span className="font-display text-gold tracking-widest text-[10px] whitespace-nowrap">ADMIN PANEL</span>
                         </div>
                     )}

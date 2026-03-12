@@ -22,9 +22,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div className="flex flex-col gap-4">
             <img
-              src="/zued_main_logo.png"
+              src="/zued_main_logo.png?v=1.1"
               alt="ZUED"
-              className="h-10 sm:h-12 w-auto object-contain object-left"
+              className="h-20 sm:h-24 w-auto object-contain object-left"
             />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
               Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
