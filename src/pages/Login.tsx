@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Eye, EyeOff, Loader2, User, Mail, Lock } from 'lucide-react';
-import logo from '@/assets/logo.png';
 
 const Login = () => {
     const [tab, setTab] = useState<'login' | 'signup'>('login');
@@ -47,7 +46,7 @@ const Login = () => {
                 {/* Logo */}
                 <div className="flex justify-center mb-8">
                     <Link to="/">
-                        <img src="/zued_logo_big.png?v=1.1" alt="ZUED" className="h-20 object-contain" />
+                        <img src="/zued_logo_big.png?v=1.1" alt="ZUED" className="h-24 md:h-20 object-contain" />
                     </Link>
                 </div>
 

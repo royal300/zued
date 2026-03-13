@@ -43,7 +43,7 @@ const Header = () => {
             <img
               src="/zued_logo_big.png?v=1.1"
               alt="ZUED - Wear The Difference"
-              className="h-10 sm:h-12 lg:h-16 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
+              className="h-14 sm:h-12 lg:h-16 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
               fetchPriority="high"
             />
           </Link>
@@ -71,18 +71,20 @@ const Header = () => {
           {/* Right side: Cart */}
           <div className="flex items-center gap-3">
             {/* Cart */}
-            <Link
-              to="/cart"
-              className="relative flex items-center gap-2 btn-gold px-4 py-2 rounded-sm text-xs"
-            >
-              <ShoppingCart size={14} />
-              <span className="hidden md:inline">Cart</span>
+            <div className="relative">
+              <Link
+                to="/cart"
+                className="flex items-center gap-2 btn-gold px-4 py-2 rounded-sm text-xs"
+              >
+                <ShoppingCart size={14} />
+                <span className="hidden md:inline">Cart</span>
+              </Link>
               {totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center shadow-md">
+                <span className="absolute -top-2 -right-2 w-5 h-5 rounded-full bg-white text-black text-[10px] font-bold flex items-center justify-center shadow-md z-10">
                   {totalItems}
                 </span>
               )}
-            </Link>
+            </div>
 
             {/* Mobile Toggle */}
             <button

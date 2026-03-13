@@ -56,16 +56,16 @@ const Cart = () => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQuantity(item.productId, item.quantity - 1, item.size, item.color)}
-                      className="w-8 h-8 rounded-sm bg-secondary border border-border flex items-center justify-center text-foreground/70 hover:border-gold/50 transition-colors"
+                      className="w-8 h-8 rounded-sm bg-white border border-border flex items-center justify-center text-primary shadow-sm hover:border-primary/50 transition-colors"
                     >
-                      <Minus size={14} />
+                      <Minus size={14} strokeWidth={3} />
                     </button>
-                    <span className="text-foreground text-sm w-8 text-center">{item.quantity}</span>
+                    <span className="text-foreground text-sm w-8 text-center font-semibold font-display">{item.quantity}</span>
                     <button
                       onClick={() => updateQuantity(item.productId, item.quantity + 1, item.size, item.color)}
-                      className="w-8 h-8 rounded-sm bg-secondary border border-border flex items-center justify-center text-foreground/70 hover:border-gold/50 transition-colors"
+                      className="w-8 h-8 rounded-sm bg-white border border-border flex items-center justify-center text-primary shadow-sm hover:border-primary/50 transition-colors"
                     >
-                      <Plus size={14} />
+                      <Plus size={14} strokeWidth={3} />
                     </button>
                   </div>
                   <button

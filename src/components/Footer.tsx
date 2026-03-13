@@ -24,7 +24,7 @@ const Footer = () => {
             <img
               src="/zued_logo_big.png?v=1.1"
               alt="ZUED"
-              className="h-12 sm:h-14 w-auto object-contain object-left"
+              className="h-16 sm:h-14 w-auto object-contain object-left"
             />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
               Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
