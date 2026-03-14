@@ -5,7 +5,6 @@ import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
 
 // Map URL slug → display name & description
 const categoryMeta: Record<string, { name: string; description: string; headline: string }> = {
@@ -93,8 +92,6 @@ const CategoryPage = () => {
                     </div>
                 </div>
             </section>
-
-            <ProductFeaturesStrip />
 
             {/* Breadcrumb */}
             <section className="px-4 mb-4">

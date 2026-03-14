@@ -6,7 +6,6 @@ import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
-import Testimonials from '@/components/Testimonials';
 
 const Jewellery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -149,8 +148,6 @@ const Jewellery = () => {
           )}
         </div>
       </section>
-
-      <Testimonials />
 
       <Footer />
     </div>

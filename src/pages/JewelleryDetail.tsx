@@ -130,7 +130,7 @@ const JewelleryDetail = () => {
 
         <ProductFeaturesStrip />
 
-        <section className="py-20 px-4 bg-background">
+        <section className="py-20 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
             <h2 className="font-display text-3xl text-foreground tracking-wider mb-8 uppercase">Similar Products</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
@@ -243,7 +243,7 @@ const JewelleryDetail = () => {
       <ProductFeaturesStrip />
 
       {similarApiProducts.length > 0 && (
-        <section className="py-20 px-4 bg-background">
+        <section className="py-20 px-4 bg-white">
           <div className="max-w-7xl mx-auto">
             <h2 className="font-display text-3xl text-foreground tracking-wider mb-8 uppercase">Similar Products</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">

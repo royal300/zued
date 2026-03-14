@@ -30,7 +30,7 @@ const Footer = () => {
               Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
             </p>
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-semibold">
-              Wear The Difference.
+              Shine That Stays.
             </p>
           </div>
 
