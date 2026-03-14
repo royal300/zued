@@ -27,7 +27,7 @@ export const JewelleryCard = ({ product }: JewelleryCardProps) => {
   return (
     <Link
       to={`/jewellery/${product.id}`}
-      className="group block bg-card rounded-sm overflow-hidden product-card-hover gold-border-glow"
+      className="group block bg-white rounded-sm overflow-hidden product-card-hover gold-border-glow"
     >
       <div className="relative aspect-square overflow-hidden bg-secondary">
         <img

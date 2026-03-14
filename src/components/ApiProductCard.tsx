@@ -27,7 +27,7 @@ const ApiProductCard = ({ product, type }: Props) => {
         : 0;
 
     return (
-        <Link to={href} className="group block bg-card rounded-sm overflow-hidden product-card-hover gold-border-glow">
+        <Link to={href} className="group block bg-white rounded-sm overflow-hidden product-card-hover gold-border-glow">
             <div className="relative aspect-square overflow-hidden bg-secondary">
                 {imageUrl ? (
                     <img src={imageUrl} alt={product.name} className="w-full h-full object-cover product-img" />
