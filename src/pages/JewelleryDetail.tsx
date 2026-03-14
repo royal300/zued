@@ -196,8 +196,15 @@ const JewelleryDetail = () => {
                     className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all ${!showVideo && activeImage === i ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
                   >
                     {isVideo(img) ? (
-                      <div className="w-full h-full flex items-center justify-center bg-black/5">
-                        <Play size={20} className="text-gold/50" />
+                      <div className="w-full h-full relative flex items-center justify-center bg-black/5">
+                        <video 
+                          src={getProductImage(img)} 
+                          className="absolute inset-0 w-full h-full object-cover"
+                          muted
+                          playsInline
+                        />
+                        <div className="absolute inset-0 bg-black/20" />
+                        <Play size={20} className="relative z-10 text-white drop-shadow-md" fill="currentColor" />
                       </div>
                     ) : (
                       <img src={getProductImage(img)} alt="" className="w-full h-full object-cover" />
@@ -208,9 +215,16 @@ const JewelleryDetail = () => {
                 {isStatic && (
                   <button 
                     onClick={() => setShowVideo(true)} 
-                    className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all relative bg-white flex items-center justify-center ${showVideo ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
+                    className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all relative flex items-center justify-center bg-black/5 ${showVideo ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
                   >
-                    <Play size={20} className="text-black" fill="currentColor" />
+                    <video 
+                      src={jewelleryVideo} 
+                      className="absolute inset-0 w-full h-full object-cover" 
+                      muted 
+                      playsInline 
+                    />
+                    <div className="absolute inset-0 bg-black/20" />
+                    <Play size={20} className="relative z-10 text-white drop-shadow-md" fill="currentColor" />
                   </button>
                 )}
               </div>
