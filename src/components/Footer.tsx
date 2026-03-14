@@ -32,6 +32,9 @@ const Footer = () => {
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-semibold">
               Shine That Stays.
             </p>
+            <p className="text-muted-foreground text-[10px] tracking-wider uppercase mt-2">
+              By <a href="https://royal300.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:underline">Royal 300</a>
+            </p>
           </div>
 
           <div className="flex flex-col gap-4">
@@ -65,16 +68,16 @@ const Footer = () => {
               </div>
               <div>
                 <p className="text-foreground text-sm font-semibold">WhatsApp</p>
-                <p className="text-muted-foreground text-xs">+91 86172 01731</p>
+                <p className="text-muted-foreground text-xs">+91 98362 08908</p>
               </div>
             </a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
+            <a href="https://www.instagram.com/zued.jewels/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 group">
               <div className="w-10 h-10 rounded-sm gradient-gold-bg flex items-center justify-center flex-shrink-0 group-hover:shadow-[0_0_20px_hsl(43,74%,49%,0.5)] transition-all duration-300">
                 <Instagram size={18} className="text-background" />
               </div>
               <div>
                 <p className="text-foreground text-sm font-semibold">Instagram</p>
-                <p className="text-muted-foreground text-xs">@zued.official</p>
+                <p className="text-muted-foreground text-xs">@zued.jewels</p>
               </div>
             </a>
             <a href="mailto:zued.jewels@gmail.com" className="flex items-center gap-3 group">
@@ -90,8 +93,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-muted-foreground text-xs tracking-wider">© 2025 ZUED. All rights reserved.</p>
-          <p className="text-muted-foreground text-xs tracking-wider">Premium Fashion · Made to Order</p>
+          <p className="text-muted-foreground text-xs tracking-wider">© 2026 ZUED. All rights reserved.</p>
         </div>
       </div>
     </footer>

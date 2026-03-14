@@ -75,8 +75,8 @@ const JewelleryDetail = () => {
         <Header />
         <main className="pt-24 pb-20 px-4">
           <div className="max-w-5xl mx-auto">
-            <button onClick={() => navigate('/jewellery')} className="flex items-center gap-2 text-muted-foreground hover:text-gold text-xs tracking-wider uppercase mb-8 transition-colors group">
-              <ArrowLeft size={14} className="transition-transform duration-200 group-hover:-translate-x-1" />Back to Jewellery
+            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-muted-foreground hover:text-gold text-xs tracking-wider uppercase mb-8 transition-colors group">
+              <ArrowLeft size={14} className="transition-transform duration-200 group-hover:-translate-x-1" />Back
             </button>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
               <div className="space-y-3">
@@ -182,8 +182,8 @@ const JewelleryDetail = () => {
       <Header />
       <main className="pt-24 pb-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <button onClick={() => navigate('/')} className="flex items-center gap-2 text-muted-foreground hover:text-gold text-xs tracking-wider uppercase mb-8 transition-colors group">
-            <ArrowLeft size={14} className="transition-transform duration-200 group-hover:-translate-x-1" />Back to Store
+          <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-muted-foreground hover:text-gold text-xs tracking-wider uppercase mb-8 transition-colors group">
+            <ArrowLeft size={14} className="transition-transform duration-200 group-hover:-translate-x-1" />Back
           </button>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
             <div className="space-y-3">

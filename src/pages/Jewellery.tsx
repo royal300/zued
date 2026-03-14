@@ -63,7 +63,7 @@ const Jewellery = () => {
     <div className="min-h-screen bg-background">
       <Header />
 
-      <section className="relative pt-44 pb-16 px-4 overflow-hidden">
+      <section className="relative pt-32 lg:pt-44 pb-16 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-gold/5 to-transparent pointer-events-none" />
         <div className="absolute top-20 left-0 w-72 h-72 rounded-full bg-gold/8 blur-[100px] pointer-events-none" />
         <div className="max-w-7xl mx-auto text-center">
@@ -118,7 +118,7 @@ const Jewellery = () => {
               <button
                 key={cat}
                 onClick={() => handleCategoryClick(cat)}
-                className={`px-5 py-2 rounded-sm text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 ${activeCategory === cat ? 'btn-gold' : 'btn-outline-gold'
+                className={`px-5 py-2 rounded-sm text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 ${activeCategory === cat ? 'btn-gold' : 'bg-white border border-gold/30 text-gold hover:border-gold'
                   }`}
               >
                 {cat}

@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-      
+
       <main className="pt-44 pb-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
@@ -40,11 +40,11 @@ const Contact = () => {
               </div>
               <h3 className="font-display text-2xl text-foreground tracking-wide mb-3">CALL US</h3>
               <p className="text-muted-foreground text-sm leading-relaxed tracking-widest">
-                +91 86172 01731
+                +91 98362 08908
               </p>
-              <a 
-                href="https://wa.me/918617201731" 
-                target="_blank" 
+              <a
+                href="https://wa.me/919836208908"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="mt-4 flex items-center gap-2 text-gold text-xs font-bold tracking-[0.2em] uppercase hover:opacity-80 transition-opacity"
               >
@@ -61,8 +61,8 @@ const Contact = () => {
               <p className="text-muted-foreground text-sm leading-relaxed tracking-wider lowercase">
                 zued.jewels@gmail.com
               </p>
-              <a 
-                href="mailto:zued.jewels@gmail.com" 
+              <a
+                href="mailto:zued.jewels@gmail.com"
                 className="mt-4 text-gold text-xs font-bold tracking-[0.2em] uppercase border-b border-gold/30 pb-1 hover:border-gold transition-colors"
               >
                 Send an Email

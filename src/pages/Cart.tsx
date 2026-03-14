@@ -97,7 +97,7 @@ const Cart = () => {
             <button
               onClick={() => {
                 const message = `Hello, I would like to order the following items from ZUED:\n\n${items.map(i => `- ${i.name} (x${i.quantity}) - ₹${(i.price * i.quantity).toLocaleString()}`).join('\n')}\n\nTotal Amount: ₹${totalPrice.toLocaleString()}\n\nPlease confirm availability. Thank you!`;
-                window.open(`https://wa.me/918617201731?text=${encodeURIComponent(message)}`, '_blank');
+                window.open(`https://wa.me/919836208908?text=${encodeURIComponent(message)}`, '_blank');
               }}
               className="btn-gold flex items-center justify-center gap-3 py-4 rounded-sm text-sm w-full"
             >
