@@ -11,11 +11,18 @@ const ProductManagement = () => {
     const [loading, setLoading] = useState(true);
 
     const load = async () => {
-        setLoading(true);
-        const res = await adminFetch(`/api/admin/products?type=jewellery`);
-        const json = await res.json();
-        setProducts(Array.isArray(json) ? json : []);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const res = await adminFetch(`/api/admin/products?type=jewellery`);
+            if (!res.ok) throw new Error('Failed to fetch');
+            const json = await res.json();
+            setProducts(Array.isArray(json) ? json : []);
+        } catch (err) {
+            console.error(err);
+            toast.error('Could not load products');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => { load(); }, [type]);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { adminFetch } from '@/context/AdminAuthContext';
 import { TrendingUp, ShoppingBag, Gem, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Dashboard = () => {
     const [data, setData] = useState<any>(null);
@@ -9,14 +10,21 @@ const Dashboard = () => {
     const [to, setTo] = useState('');
 
     const load = async () => {
-        setLoading(true);
-        const params = new URLSearchParams();
-        if (from) params.append('from', from);
-        if (to) params.append('to', to);
-        const res = await adminFetch(`/api/admin/dashboard?${params}`);
-        const json = await res.json();
-        setData(json);
-        setLoading(false);
+        try {
+            setLoading(true);
+            const params = new URLSearchParams();
+            if (from) params.append('from', from);
+            if (to) params.append('to', to);
+            const res = await adminFetch(`/api/admin/dashboard?${params}`);
+            if (!res.ok) throw new Error('Failed to fetch');
+            const json = await res.json();
+            setData(json);
+        } catch (err) {
+            console.error(err);
+            toast.error('Could not load dashboard data');
+        } finally {
+            setLoading(false);
+        }
     };
 
     useEffect(() => { load(); }, []);
@@ -48,8 +56,8 @@ const Dashboard = () => {
                     {/* Stats Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                         {[
-                            { label: 'Total Orders', count: data.total.count, revenue: data.total.revenue, icon: TrendingUp, color: 'text-gold' },
-                            { label: 'Jewellery Orders', count: data.jewellery.count, revenue: data.jewellery.revenue, icon: Gem, color: 'text-purple-400' },
+                            { label: 'Total Orders', count: data?.total?.count || 0, revenue: data?.total?.revenue || 0, icon: TrendingUp, color: 'text-gold' },
+                            { label: 'Jewellery Orders', count: data?.jewellery?.count || 0, revenue: data?.jewellery?.revenue || 0, icon: Gem, color: 'text-purple-400' },
                         ].map(stat => (
                             <div key={stat.label} className="glass-card rounded-sm p-5 border border-border/60">
                                 <div className="flex items-center justify-between mb-3">
@@ -67,13 +75,13 @@ const Dashboard = () => {
                         <div className="glass-card rounded-sm p-5 border border-border/60">
                             <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Order Status</h2>
                             <div className="space-y-2">
-                                {data.statusBreakdown.map((s: any) => (
+                                {data?.statusBreakdown?.map((s: any) => (
                                     <div key={s.status} className="flex justify-between items-center">
                                         <span className={`text-sm capitalize ${statusColors[s.status] || 'text-foreground'}`}>{s.status}</span>
                                         <span className="text-foreground font-semibold text-sm">{s.count}</span>
                                     </div>
                                 ))}
-                                {!data.statusBreakdown.length && <p className="text-muted-foreground text-xs">No orders yet</p>}
+                                {(!data?.statusBreakdown || data.statusBreakdown.length === 0) && <p className="text-muted-foreground text-xs">No orders yet</p>}
                             </div>
                         </div>
 
@@ -81,7 +89,7 @@ const Dashboard = () => {
                         <div className="glass-card rounded-sm p-5 border border-border/60">
                             <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Recent Orders</h2>
                             <div className="space-y-3">
-                                {data.recentOrders.map((o: any) => (
+                                {data?.recentOrders?.map((o: any) => (
                                     <div key={o.id} className="flex justify-between items-center border-b border-border/40 pb-2">
                                         <div>
                                             <p className="text-sm text-foreground">{o.customer_name || '—'}</p>
@@ -93,7 +101,7 @@ const Dashboard = () => {
                                         </div>
                                     </div>
                                 ))}
-                                {!data.recentOrders.length && <p className="text-muted-foreground text-xs">No recent orders</p>}
+                                {(!data?.recentOrders || data.recentOrders.length === 0) && <p className="text-muted-foreground text-xs">No recent orders</p>}
                             </div>
                         </div>
                     </div>
