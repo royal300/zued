@@ -42,18 +42,31 @@ const categoryMeta: Record<string, { name: string; description: string; headline
 
 const CategoryPage = () => {
     const { slug } = useParams<{ slug: string }>();
-    const meta = slug ? categoryMeta[slug] : null;
+
+    // Find meta by matching slug (normalized)
+    const metaKey = slug ? Object.keys(categoryMeta).find(k => k === slug) : null;
+    const hardcodedMeta = metaKey ? categoryMeta[metaKey] : null;
 
     const [apiProducts, setApiProducts] = useState<any[]>([]);
+    const [apiCategories, setApiCategories] = useState<any[]>([]);
 
     useEffect(() => {
         fetch('/api/products?type=jewellery')
             .then(r => r.ok ? r.json() : [])
             .then(d => setApiProducts(Array.isArray(d) ? d : []))
             .catch(() => { });
+
+        fetch('/api/categories')
+            .then(r => r.ok ? r.json() : [])
+            .then(d => setApiCategories(Array.isArray(d) ? d : []))
+            .catch(() => { });
     }, []);
 
-    if (!meta) {
+    const categoryName = slug ? slug.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ') : '';
+    const currentCategory = apiCategories.find(c => c.name.toLowerCase() === categoryName.toLowerCase()) ||
+        (hardcodedMeta ? { name: hardcodedMeta.name } : null);
+
+    if (!slug || (!hardcodedMeta && !currentCategory)) {
         return (
             <div className="min-h-screen bg-background flex items-center justify-center">
                 <div className="text-center">
@@ -63,6 +76,12 @@ const CategoryPage = () => {
             </div>
         );
     }
+
+    const meta = hardcodedMeta || {
+        name: currentCategory?.name || categoryName,
+        headline: (currentCategory?.name || categoryName).toUpperCase(),
+        description: `Explore our collection of premium gold-plated ${categoryName.toLowerCase()}.`,
+    };
 
     const filteredStatic = jewelleryProducts.filter(p => p.category === meta.name);
     const filteredApi = apiProducts.filter(p => p.category_name === meta.name);

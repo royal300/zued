@@ -33,7 +33,16 @@ const storage = multer.diskStorage({
         cb(null, unique + path.extname(file.originalname));
     },
 });
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({
+    storage,
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50MB for videos
+    fileFilter: (req, file, cb) => {
+        const allowed = ['.jpg', '.jpeg', '.png', '.gif', '.mp4', '.mov', '.webm'];
+        const ext = path.extname(file.originalname).toLowerCase();
+        if (allowed.includes(ext)) cb(null, true);
+        else cb(new Error('Invalid file type'));
+    }
+});
 
 // DB pool
 const pool = mysql.createPool({
@@ -75,7 +84,8 @@ async function initDB() {
       product_type ENUM('tshirt','jewellery') NOT NULL,
       category_id INT DEFAULT NULL,
       name VARCHAR(200) NOT NULL,
-      description TEXT,
+      short_description TEXT,
+      long_description TEXT,
       original_price DECIMAL(10,2) NOT NULL,
       sale_price DECIMAL(10,2) DEFAULT NULL,
       stock INT DEFAULT 0,
@@ -137,6 +147,16 @@ async function initDB() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )
   `);
+    // Seed initial categories if empty
+    const [catCount] = await conn.execute('SELECT COUNT(*) as count FROM categories');
+    if (catCount[0].count === 0) {
+        const initialCats = ['Ring', 'Chain Pendant', 'Earrings', 'Bracelet', 'Bangles', 'Chain Earring Set'];
+        for (const cat of initialCats) {
+            await conn.execute('INSERT INTO categories (name, product_type) VALUES (?, ?)', [cat, 'jewellery']);
+        }
+        console.log('Initial categories seeded');
+    }
+
     conn.release();
     console.log('DB initialized');
 }
@@ -356,11 +376,11 @@ app.get('/api/products/:id', async (req, res) => {  // public single
 
 app.post('/api/admin/products', adminMiddleware, async (req, res) => {
     try {
-        const { product_type, category_id, name, description, original_price, sale_price, stock, is_variable, images, badge, variants } = req.body;
+        const { product_type, category_id, name, short_description, long_description, original_price, sale_price, stock, is_variable, images, badge, variants } = req.body;
         if (!name || !product_type || !original_price) return res.status(400).json({ error: 'name, product_type, original_price required' });
         const [result] = await pool.execute(
-            'INSERT INTO products (product_type, category_id, name, description, original_price, sale_price, stock, is_variable, images, badge) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-            [product_type, category_id || null, name, description || '', original_price, sale_price || null, is_variable ? 0 : (stock || 0), is_variable ? 1 : 0, JSON.stringify(images || []), badge || null]
+            'INSERT INTO products (product_type, category_id, name, short_description, long_description, original_price, sale_price, stock, is_variable, images, badge) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [product_type, category_id || null, name, short_description || '', long_description || '', original_price, sale_price || null, is_variable ? 0 : (stock || 0), is_variable ? 1 : 0, JSON.stringify(images || []), badge || null]
         );
         const productId = result.insertId;
         if (is_variable && variants && variants.length) {
@@ -377,10 +397,10 @@ app.post('/api/admin/products', adminMiddleware, async (req, res) => {
 
 app.put('/api/admin/products/:id', adminMiddleware, async (req, res) => {
     try {
-        const { category_id, name, description, original_price, sale_price, stock, is_variable, images, badge, active, variants } = req.body;
+        const { category_id, name, short_description, long_description, original_price, sale_price, stock, is_variable, images, badge, active, variants } = req.body;
         await pool.execute(
-            'UPDATE products SET category_id=?, name=?, description=?, original_price=?, sale_price=?, stock=?, is_variable=?, images=?, badge=?, active=? WHERE id=?',
-            [category_id || null, name, description || '', original_price, sale_price || null, is_variable ? 0 : (stock || 0), is_variable ? 1 : 0, JSON.stringify(images || []), badge || null, active !== false, req.params.id]
+            'UPDATE products SET category_id=?, name=?, short_description=?, long_description=?, original_price=?, sale_price=?, stock=?, is_variable=?, images=?, badge=?, active=? WHERE id=?',
+            [category_id || null, name, short_description || '', long_description || '', original_price, sale_price || null, is_variable ? 0 : (stock || 0), is_variable ? 1 : 0, JSON.stringify(images || []), badge || null, active !== false, req.params.id]
         );
         if (is_variable && variants) {
             await pool.execute('DELETE FROM product_variants WHERE product_id = ?', [req.params.id]);

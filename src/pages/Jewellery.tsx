@@ -24,6 +24,7 @@ const Jewellery = () => {
 
     fetch('/api/categories')
       .then(r => r.ok ? r.json() : [])
+      .then(d => setApiCategories(Array.isArray(d) ? d : []))
       .catch(() => { });
   }, []);
 
@@ -41,11 +42,7 @@ const Jewellery = () => {
     }
   };
 
-  const apiCatNames = apiCategories
-    .filter(c => c.product_type === 'jewellery' || c.product_type === 'all')
-    .map(c => c.name);
-  const extraCats = apiCatNames.filter(n => !staticCats.includes(n));
-  const allCategories = [...staticCats, ...extraCats];
+  const allCategories = ['All', ...apiCategories.map(c => c.name)];
 
   const filteredStatic = activeCategory === 'All'
     ? jewelleryProducts

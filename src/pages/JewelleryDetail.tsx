@@ -12,11 +12,8 @@ import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
 import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 
-const resolveImage = (img: string): string => {
-  if (!img) return '';
-  if (img.startsWith('http') || img.startsWith('/uploads')) return img;
-  return getProductImage(img);
-};
+// getProductImage is now imported from @/components/ProductCard
+
 
 const JewelleryDetail = () => {
   const { id } = useParams();
@@ -154,10 +151,11 @@ const JewelleryDetail = () => {
   // === API PRODUCT UI ===
   const p = apiProduct;
   const images: string[] = typeof p.images === 'string' ? JSON.parse(p.images) : (p.images || []);
-  const features: string[] = typeof p.features === 'string' ? JSON.parse(p.features) : (p.features || []);
   const displayPrice = Number(p.sale_price || p.original_price);
   const hasSale = p.original_price && p.sale_price && Number(p.original_price) > Number(p.sale_price);
-  const displayImage = images[activeImage] ? resolveImage(images[activeImage]) : '';
+  const displayImage = images[activeImage] ? getProductImage(images[activeImage]) : '';
+  const isVideo = (url: string) => url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') || url.toLowerCase().endsWith('.mov');
+  const activeUrlIsVideo = displayImage && isVideo(displayImage);
 
   const [apiProducts, setApiProducts] = useState<any[]>([]);
 
@@ -188,7 +186,9 @@ const JewelleryDetail = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
             <div className="space-y-3">
               <div className="relative aspect-square rounded-sm overflow-hidden gold-border-glow bg-secondary">
-                {displayImage ? (
+                {activeUrlIsVideo ? (
+                  <video src={displayImage} className="w-full h-full object-cover" autoPlay muted loop playsInline />
+                ) : displayImage ? (
                   <img src={displayImage} alt={p.name} className="w-full h-full object-cover animate-scale-in" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs">No Image</div>
@@ -201,7 +201,11 @@ const JewelleryDetail = () => {
                   {images.map((img, i) => (
                     <button key={i} onClick={() => setActiveImage(i)}
                       className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all ${activeImage === i ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}>
-                      <img src={resolveImage(img)} alt="" className="w-full h-full object-cover" />
+                      {isVideo(img) ? (
+                        <div className="w-full h-full flex items-center justify-center bg-black/5"><Play size={20} className="text-gold/50" /></div>
+                      ) : (
+                        <img src={getProductImage(img)} alt="" className="w-full h-full object-cover" />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -211,7 +215,7 @@ const JewelleryDetail = () => {
               <div>
                 {p.category_name && <p className="text-gold text-[10px] tracking-[0.4em] uppercase font-semibold mb-2">{p.category_name}</p>}
                 <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl text-foreground tracking-wider leading-none mb-3">{p.name.toUpperCase()}</h1>
-                {p.description && <p className="text-muted-foreground text-sm leading-relaxed">{p.description}</p>}
+                {p.short_description && <p className="text-muted-foreground text-sm leading-relaxed">{p.short_description}</p>}
               </div>
               <div className="h-px bg-gradient-to-r from-gold/30 to-transparent" />
               <div>
@@ -221,9 +225,9 @@ const JewelleryDetail = () => {
                   {hasSale && <p className="text-muted-foreground text-sm line-through mb-1">₹{Number(p.original_price).toLocaleString()}</p>}
                 </div>
               </div>
-              {features.length > 0 && (
+              {p.long_description && (
                 <div className="glass-card rounded-sm p-5 space-y-3">
-                  {features.map((feature: string, i: number) => (
+                  {p.long_description.split('\n').filter(Boolean).map((feature: string, i: number) => (
                     <div key={i} className="flex items-start gap-3">
                       <Star size={12} className="text-gold mt-0.5 flex-shrink-0" fill="currentColor" />
                       <p className="text-muted-foreground text-xs leading-relaxed">{feature}</p>

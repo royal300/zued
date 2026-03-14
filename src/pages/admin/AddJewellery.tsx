@@ -11,7 +11,7 @@ const AddJewellery = () => {
 
     const [categories, setCategories] = useState<any[]>([]);
     const [form, setForm] = useState({
-        name: '', description: '', category_id: '', original_price: '',
+        name: '', short_description: '', long_description: '', category_id: '', original_price: '',
         sale_price: '', stock: '', badge: '',
     });
     const [images, setImages] = useState<string[]>([]);
@@ -25,7 +25,16 @@ const AddJewellery = () => {
             adminFetch('/api/admin/products').then(r => r.json()).then(d => {
                 const p = d.find((x: any) => String(x.id) === id);
                 if (p) {
-                    setForm({ name: p.name, description: p.description || '', category_id: p.category_id || '', original_price: p.original_price, sale_price: p.sale_price || '', stock: p.stock, badge: p.badge || '' });
+                    setForm({
+                        name: p.name,
+                        short_description: p.short_description || '',
+                        long_description: p.long_description || '',
+                        category_id: p.category_id || '',
+                        original_price: p.original_price,
+                        sale_price: p.sale_price || '',
+                        stock: p.stock,
+                        badge: p.badge || ''
+                    });
                     setImages(typeof p.images === 'string' ? JSON.parse(p.images) : (p.images || []));
                 }
             });
@@ -48,7 +57,7 @@ const AddJewellery = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setSaving(true);
-        const body = { ...form, product_type: 'jewellery', images, description: features.filter(Boolean).join('\n') || form.description };
+        const body = { ...form, product_type: 'jewellery', images };
         const res = await adminFetch(isEdit ? `/api/admin/products/${id}` : '/api/admin/products', {
             method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(body),
         });
@@ -85,8 +94,13 @@ const AddJewellery = () => {
                         </div>
                     </div>
                     <div>
-                        <label className="block text-xs text-muted-foreground mb-1">Short Description</label>
-                        <input value={form.description} onChange={e => f('description', e.target.value)}
+                        <label className="block text-xs text-muted-foreground mb-1">Short Description (shown under name)</label>
+                        <input value={form.short_description} onChange={e => f('short_description', e.target.value)}
+                            className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                    </div>
+                    <div>
+                        <label className="block text-xs text-muted-foreground mb-1">Long Description / Features</label>
+                        <textarea value={form.long_description} onChange={e => f('long_description', e.target.value)} rows={4}
                             className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
                     </div>
                 </div>
@@ -147,20 +161,23 @@ const AddJewellery = () => {
                     </div>
                 </div>
 
-                {/* Images */}
                 <div className="glass-card rounded-sm p-5 border border-border/60 space-y-3">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Product Images</h2>
+                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Product Media (Images/Videos)</h2>
                     <div className="flex flex-wrap gap-3">
                         {images.map((img, i) => (
                             <div key={i} className="relative group">
-                                <img src={img} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                {img.toLowerCase().endsWith('.mp4') || img.toLowerCase().endsWith('.webm') || img.toLowerCase().endsWith('.mov') ? (
+                                    <video src={img} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                ) : (
+                                    <img src={img} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                )}
                                 <button type="button" onClick={() => setImages(images.filter((_, idx) => idx !== i))}
                                     className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive rounded-full text-foreground text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">×</button>
                             </div>
                         ))}
                         <label className="w-20 h-20 border-2 border-dashed border-border rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 transition-colors text-muted-foreground hover:text-gold">
                             {uploading ? <Loader2 size={16} className="animate-spin" /> : <><Upload size={16} /><span className="text-[10px] mt-1">Upload</span></>}
-                            <input type="file" accept="image/*" className="hidden" onChange={e => e.target.files && uploadImage(e.target.files[0])} />
+                            <input type="file" accept="image/*,video/*" className="hidden" onChange={e => e.target.files && uploadImage(e.target.files[0])} />
                         </label>
                     </div>
                 </div>

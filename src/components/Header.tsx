@@ -15,16 +15,30 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
+  const [navLinks, setNavLinks] = useState([
     { label: 'Home', to: '/' },
-    { label: 'Ring', to: '/category/ring' },
-    { label: 'Chain Pendant', to: '/category/chain-pendant' },
-    { label: 'Earrings', to: '/category/earrings' },
-    { label: 'Bracelet', to: '/category/bracelet' },
-    { label: 'Bangles', to: '/category/bangles' },
-    { label: 'Chain Earring Set', to: '/category/chain-earring-set' },
     { label: 'Contact Us', to: '/contact' },
-  ];
+  ]);
+
+  useEffect(() => {
+    fetch('/api/categories')
+      .then(r => r.ok ? r.json() : [])
+      .then(d => {
+        if (Array.isArray(d)) {
+          const cats = d.filter(c => c.product_type === 'jewellery' || c.product_type === 'all');
+          const dynamicLinks = cats.map(c => ({
+            label: c.name,
+            to: `/category/${c.name.toLowerCase().replace(/\s+/g, '-')}`
+          }));
+          setNavLinks([
+            { label: 'Home', to: '/' },
+            ...dynamicLinks,
+            { label: 'Contact Us', to: '/contact' },
+          ]);
+        }
+      })
+      .catch(() => { });
+  }, []);
 
   const isActive = (to: string) => {
     return location.pathname === to;

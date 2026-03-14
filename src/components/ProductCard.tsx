@@ -16,6 +16,10 @@ const jewelleryImages: Record<string, string> = {
 };
 
 export const getProductImage = (imagePath: string): string => {
+  if (!imagePath) return jewellery1;
+  if (imagePath.startsWith('http') || imagePath.startsWith('/uploads')) {
+    return imagePath;
+  }
   return jewelleryImages[imagePath] || jewellery1;
 };
 
