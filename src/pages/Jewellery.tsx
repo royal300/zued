@@ -5,6 +5,8 @@ import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
+import Testimonials from '@/components/Testimonials';
 
 const Jewellery = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,15 +33,12 @@ const Jewellery = () => {
     setActiveCategory(cat);
   }, [searchParams]);
 
-  const navigate = useNavigate();
-
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat);
     if (cat === 'All') {
       setSearchParams(new URLSearchParams());
     } else {
-      const slug = cat.toLowerCase().replace(/ /g, '-');
-      navigate(`/category/${slug}`);
+      setSearchParams({ category: cat });
     }
   };
 
@@ -58,7 +57,8 @@ const Jewellery = () => {
     return p.category_name === activeCategory;
   });
 
-  const totalCount = jewelleryProducts.length + apiProducts.length;
+  const displayedStatic = activeCategory === 'All' ? filteredStatic : filteredStatic.slice(0, 8);
+  const displayedApi = activeCategory === 'All' ? filteredApi : filteredApi.slice(0, 8 - displayedStatic.length);
 
   return (
     <div className="min-h-screen bg-background">
@@ -73,18 +73,18 @@ const Jewellery = () => {
           </p>
           <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl text-foreground tracking-wider animate-fade-in-up">
             ANTI TARNISH
-            <span className="block gold-gradient-text">JEWELLERY</span>
+            <span className="block gold-gradient-text uppercase font-bold">Shine That Stays</span>
           </h1>
           <p className="text-muted-foreground text-sm tracking-wider max-w-md mx-auto mt-4 animate-fade-in delay-200">
             Adorn yourself in luxury. Each piece is a statement of your excellence.
           </p>
           <div className="flex items-center gap-4 justify-center mt-6 animate-fade-in delay-300">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/50" />
-            <span className="text-gold text-[10px] tracking-[0.4em] uppercase">{totalCount} Pieces</span>
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/50" />
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-gold to-transparent" />
           </div>
         </div>
       </section>
+
+      <ProductFeaturesStrip />
 
       {/* Promotional Banners */}
       <section className="px-4 mb-16">
@@ -133,22 +133,24 @@ const Jewellery = () => {
       <section className="px-4 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-            {filteredStatic.map((product, i) => (
+            {displayedStatic.map((product, i) => (
               <div key={product.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
                 <JewelleryCard product={product} />
               </div>
             ))}
-            {filteredApi.map((product, i) => (
-              <div key={`api-${product.id}`} className="animate-fade-in-up" style={{ animationDelay: `${(filteredStatic.length + i) * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
+            {displayedApi.map((product, i) => (
+              <div key={`api-${product.id}`} className="animate-fade-in-up" style={{ animationDelay: `${(displayedStatic.length + i) * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
                 <ApiProductCard product={product} type="jewellery" />
               </div>
             ))}
           </div>
-          {filteredStatic.length === 0 && filteredApi.length === 0 && (
+          {displayedStatic.length === 0 && displayedApi.length === 0 && (
             <p className="text-center text-muted-foreground text-sm py-16">No products in this category.</p>
           )}
         </div>
       </section>
+
+      <Testimonials />
 
       <Footer />
     </div>

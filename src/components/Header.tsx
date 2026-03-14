@@ -40,7 +40,7 @@ const Header = () => {
           <Link to="/" className="flex items-center gap-2 group shrink-0">
             <img
               src="/zued_logo_big.png?v=1.1"
-              alt="ZUED - Wear The Difference"
+              alt="ZUED - Shine That Stays"
               className="h-10 sm:h-12 lg:h-12 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
               fetchPriority="high"
             />

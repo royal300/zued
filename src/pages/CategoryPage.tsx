@@ -5,6 +5,7 @@ import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
 
 // Map URL slug → display name & description
 const categoryMeta: Record<string, { name: string; description: string; headline: string }> = {
@@ -88,14 +89,12 @@ const CategoryPage = () => {
                         {meta.description}
                     </p>
                     <div className="flex items-center gap-4 justify-center mt-6 animate-fade-in delay-300">
-                        <div className="h-px w-16 bg-gradient-to-r from-transparent to-gold/50" />
-                        <span className="text-gold text-[10px] tracking-[0.4em] uppercase">
-                            {totalCount} {totalCount === 1 ? 'Piece' : 'Pieces'}
-                        </span>
-                        <div className="h-px w-16 bg-gradient-to-l from-transparent to-gold/50" />
+                        <div className="h-px w-32 bg-gradient-to-r from-transparent via-gold to-transparent" />
                     </div>
                 </div>
             </section>
+
+            <ProductFeaturesStrip />
 
             {/* Breadcrumb */}
             <section className="px-4 mb-4">

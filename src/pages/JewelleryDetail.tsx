@@ -8,6 +8,9 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { toast } from 'sonner';
 import jewelleryVideo from '@/assets/jewellery-video.mp4';
+import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
+import { JewelleryCard } from '@/components/ProductCard';
+import ApiProductCard from '@/components/ApiProductCard';
 
 const resolveImage = (img: string): string => {
   if (!img) return '';
@@ -120,11 +123,29 @@ const JewelleryDetail = () => {
                 <button onClick={handleAddToCart} className="btn-gold flex items-center justify-center gap-3 py-4 rounded-sm text-sm w-full">
                   <ShoppingCart size={18} /> Add to Cart — {product.price}
                 </button>
-                <p className="text-muted-foreground text-xs text-center tracking-wider">Limited stock available · Enquire to confirm availability</p>
               </div>
             </div>
           </div>
         </main>
+
+        <ProductFeaturesStrip />
+
+        <section className="py-20 px-4 bg-background">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="font-display text-3xl text-foreground tracking-wider mb-8 uppercase">Similar Products</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+              {jewelleryProducts
+                .filter(p => p.category === product.category && p.id !== product.id)
+                .slice(0, 4)
+                .map((p, i) => (
+                  <div key={p.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                    <JewelleryCard product={p} />
+                  </div>
+                ))}
+            </div>
+          </div>
+        </section>
+
         <Footer />
       </div>
     );
@@ -138,10 +159,23 @@ const JewelleryDetail = () => {
   const hasSale = p.original_price && p.sale_price && Number(p.original_price) > Number(p.sale_price);
   const displayImage = images[activeImage] ? resolveImage(images[activeImage]) : '';
 
+  const [apiProducts, setApiProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('/api/products?type=jewellery')
+      .then(r => r.ok ? r.json() : [])
+      .then(d => setApiProducts(Array.isArray(d) ? d : []))
+      .catch(() => { });
+  }, []);
+
   const handleAddApiToCart = () => {
     addToCart({ productId: `api-${p.id}`, productType: 'jewellery', name: p.name, price: displayPrice, image: displayImage, quantity: 1 });
     toast.success(`${p.name} added to cart!`);
   };
+
+  const similarApiProducts = apiProducts
+    .filter(ap => ap.category_name === p.category_name && `api-${ap.id}` !== id)
+    .slice(0, 4);
 
   return (
     <div className="min-h-screen bg-white">
@@ -201,11 +235,28 @@ const JewelleryDetail = () => {
               <button onClick={handleAddApiToCart} className="btn-gold flex items-center justify-center gap-3 py-4 rounded-sm text-sm w-full">
                 <ShoppingCart size={18} /> Add to Cart — ₹{displayPrice.toLocaleString()}
               </button>
-              <p className="text-muted-foreground text-xs text-center tracking-wider">Limited stock available · Ships in 3–5 business days</p>
             </div>
           </div>
         </div>
       </main>
+
+      <ProductFeaturesStrip />
+
+      {similarApiProducts.length > 0 && (
+        <section className="py-20 px-4 bg-background">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="font-display text-3xl text-foreground tracking-wider mb-8 uppercase">Similar Products</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+              {similarApiProducts.map((ap, i) => (
+                <div key={ap.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                  <ApiProductCard product={ap} type="jewellery" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <Footer />
     </div>
   );
