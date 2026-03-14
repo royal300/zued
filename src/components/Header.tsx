@@ -35,24 +35,24 @@ const Header = () => {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 bg-black/10 backdrop-blur-3xl border-b border-white/10`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20 lg:h-28">
+        <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group shrink-0">
+          <Link to="/" className="flex items-center gap-2 group shrink-0">
             <img
               src="/zued_logo_big.png?v=1.1"
               alt="ZUED - Wear The Difference"
-              className="h-14 sm:h-12 lg:h-16 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
+              className="h-10 sm:h-12 lg:h-12 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
               fetchPriority="high"
             />
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.to}
-                className={`relative text-xs font-semibold tracking-[0.2em] uppercase transition-all duration-300 group ${isActive(link.to)
+                className={`relative text-[10px] font-semibold tracking-[0.1em] uppercase whitespace-nowrap transition-all duration-300 group ${isActive(link.to)
                   ? 'text-gold'
                   : 'text-foreground/70 hover:text-foreground'
                   }`}
