@@ -363,7 +363,11 @@ app.get('/api/products', async (req, res) => {  // public
 
 app.get('/api/products/:id', async (req, res) => {  // public single
     try {
-        const [rows] = await pool.execute('SELECT * FROM products WHERE id = ? AND active = TRUE', [req.params.id]);
+        const [rows] = await pool.execute(`
+            SELECT p.*, c.name as category_name 
+            FROM products p LEFT JOIN categories c ON p.category_id = c.id
+            WHERE p.id = ? AND p.active = TRUE
+        `, [req.params.id]);
         if (!rows.length) return res.status(404).json({ error: 'Not found' });
         const product = rows[0];
         if (product.is_variable) {

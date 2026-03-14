@@ -10,9 +10,11 @@ const AddJewellery = () => {
     const navigate = useNavigate();
     const isEdit = !!id;
 
+    const defaultLongDescription = `Waterproof Jewellery — Made for daily wear\n\nSweat Resistant — Perfect for everyday style\n\nLightweight Design — Comfort all day\n\nPremium Plating — Long-lasting color`;
+
     const [categories, setCategories] = useState<any[]>([]);
     const [form, setForm] = useState({
-        name: '', short_description: '', long_description: '', category_id: '', original_price: '',
+        name: '', short_description: '', long_description: isEdit ? '' : defaultLongDescription, category_id: '', original_price: '',
         sale_price: '', stock: '', badge: '',
     });
     const [images, setImages] = useState<string[]>([]);
@@ -40,7 +42,7 @@ const AddJewellery = () => {
                 }
             });
         }
-    }, [id]);
+    }, [id, isEdit]);
 
     const discountPct = form.original_price && form.sale_price
         ? Math.round((1 - Number(form.sale_price) / Number(form.original_price)) * 100) : 0;
@@ -70,122 +72,107 @@ const AddJewellery = () => {
     const f = (key: string, val: any) => setForm(p => ({ ...p, [key]: val }));
 
     return (
-        <div className="p-6 min-h-screen">
+        <div className="p-6 min-h-screen bg-white">
             <button onClick={() => navigate('/admin/products/jewellery')} className="flex items-center gap-2 text-muted-foreground hover:text-gold text-xs mb-6 transition-colors">
                 <ArrowLeft size={14} /> Back to Jewellery
             </button>
             <h1 className="font-display text-2xl text-foreground tracking-widest mb-6">{isEdit ? 'EDIT' : 'ADD'} JEWELLERY</h1>
 
             <form onSubmit={handleSubmit} className="space-y-5 max-w-3xl">
-                <div className="glass-card rounded-sm p-5 border border-border/60 space-y-4">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Basic Info</h2>
+                <div className="bg-[#fdfdfd] border border-border/80 rounded-sm p-5 space-y-4 shadow-sm">
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-black">Basic Info</h2>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-xs text-muted-foreground mb-1">Product Name *</label>
+                            <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Product Name *</label>
                             <input value={form.name} onChange={e => f('name', e.target.value)} required
-                                className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                                placeholder="Enter product name"
+                                className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                         </div>
                         <div>
-                            <label className="block text-xs text-muted-foreground mb-1">Category</label>
+                            <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Category</label>
                             <select value={form.category_id} onChange={e => f('category_id', e.target.value)}
-                                className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60">
+                                className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black focus:outline-none focus:border-gold/60 shadow-inner">
                                 <option value="">Select category</option>
                                 {categories.map(c => <option key={c.id} value={c.id}>{c.parent_id ? '  └ ' : ''}{c.name}</option>)}
                             </select>
                         </div>
                     </div>
                     <div>
-                        <label className="block text-xs text-muted-foreground mb-1">Short Description (shown under name)</label>
+                        <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Short Description (shown under name)</label>
                         <input value={form.short_description} onChange={e => f('short_description', e.target.value)}
-                            className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                            placeholder="Brief catchy description"
+                            className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                     </div>
                     <div>
-                        <label className="block text-xs text-muted-foreground mb-1">Long Description / Features</label>
-                        <textarea value={form.long_description} onChange={e => f('long_description', e.target.value)} rows={4}
-                            className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
-                    </div>
-                </div>
-
-                {/* Feature Bullets */}
-                <div className="glass-card rounded-sm p-5 border border-border/60 space-y-3">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Feature Bullet Points</h2>
-                    <div className="space-y-2">
-                        {features.map((f, i) => (
-                            <div key={i} className="flex gap-2 items-center">
-                                <input value={f} onChange={e => { const u = [...features]; u[i] = e.target.value; setFeatures(u); }}
-                                    placeholder={`Feature ${i + 1}`}
-                                    className="flex-1 bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
-                                {features.length > 1 && (
-                                    <button type="button" onClick={() => setFeatures(features.filter((_, idx) => idx !== i))} className="text-muted-foreground hover:text-destructive transition-colors">
-                                        <Trash2 size={14} />
-                                    </button>
-                                )}
-                            </div>
-                        ))}
-                        <button type="button" onClick={() => setFeatures([...features, ''])} className="flex items-center gap-1 text-gold text-xs hover:underline">
-                            <Plus size={12} /> Add feature
-                        </button>
+                        <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Long Description / Features</label>
+                        <textarea value={form.long_description} onChange={e => f('long_description', e.target.value)} rows={6}
+                            placeholder="Detailed description..."
+                            className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner leading-relaxed" />
                     </div>
                 </div>
 
                 {/* Pricing */}
-                <div className="glass-card rounded-sm p-5 border border-border/60 space-y-4">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Pricing & Stock</h2>
+                <div className="bg-[#fdfdfd] border border-border/80 rounded-sm p-5 space-y-4 shadow-sm">
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-black">Pricing & Stock</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div>
-                            <label className="block text-xs text-muted-foreground mb-1">Original Price (₹) *</label>
+                            <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Original Price (₹) *</label>
                             <input type="number" value={form.original_price} onChange={e => f('original_price', e.target.value)} required
-                                className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                                placeholder="0.00"
+                                className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                         </div>
                         <div>
-                            <label className="block text-xs text-muted-foreground mb-1">Sale Price (₹)</label>
+                            <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Sale Price (₹)</label>
                             <input type="number" value={form.sale_price} onChange={e => f('sale_price', e.target.value)}
-                                className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                                placeholder="Optional sale price"
+                                className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                         </div>
                         <div className="flex flex-col justify-end">
                             {discountPct > 0 && (
-                                <span className="px-3 py-2 rounded-sm bg-green-500/10 border border-green-500/30 text-green-400 text-sm font-semibold text-center">
+                                <span className="px-3 py-2 rounded-sm bg-green-500/10 border border-green-500/30 text-green-600 text-sm font-bold text-center">
                                     {discountPct}% OFF
                                 </span>
                             )}
                         </div>
                         <div>
-                            <label className="block text-xs text-muted-foreground mb-1">Stock</label>
+                            <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Stock</label>
                             <input type="number" value={form.stock} onChange={e => f('stock', e.target.value)}
-                                className="w-full bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                                placeholder="0"
+                                className="w-full bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                         </div>
                     </div>
                     <div>
-                        <label className="block text-xs text-muted-foreground mb-1">Badge (optional)</label>
-                        <input value={form.badge} onChange={e => f('badge', e.target.value)} placeholder="e.g. LIMITED"
-                            className="w-full sm:w-48 bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60" />
+                        <label className="block text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">Badge (optional)</label>
+                        <input value={form.badge} onChange={e => f('badge', e.target.value)} placeholder="e.g. LIMITED, NEW"
+                            className="w-full sm:w-48 bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 shadow-inner" />
                     </div>
                 </div>
 
-                <div className="glass-card rounded-sm p-5 border border-border/60 space-y-3">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Product Media (Images/Videos)</h2>
+                <div className="bg-[#fdfdfd] border border-border/80 rounded-sm p-5 space-y-3 shadow-sm">
+                    <h2 className="text-xs font-bold uppercase tracking-wider text-black">Product Media (Images/Videos)</h2>
+                    <p className="text-[10px] text-muted-foreground mb-2 italic">Tip: You can upload short videos (.mp4, .webm) for the gallery too!</p>
                     <div className="flex flex-wrap gap-3">
                         {images.map((img, i) => (
                             <div key={i} className="relative group">
                                 {img.toLowerCase().endsWith('.mp4') || img.toLowerCase().endsWith('.webm') || img.toLowerCase().endsWith('.mov') ? (
-                                    <video src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                    <video src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border shadow-sm" />
                                 ) : (
-                                    <img src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                    <img src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border shadow-sm" />
                                 )}
                                 <button type="button" onClick={() => setImages(images.filter((_, idx) => idx !== i))}
-                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive rounded-full text-foreground text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">×</button>
+                                    className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive rounded-full text-white text-[10px] flex items-center justify-center border border-white opacity-0 group-hover:opacity-100 transition-opacity">×</button>
                             </div>
                         ))}
-                        <label className="w-20 h-20 border-2 border-dashed border-border rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 transition-colors text-muted-foreground hover:text-gold">
-                            {uploading ? <Loader2 size={16} className="animate-spin" /> : <><Upload size={16} /><span className="text-[10px] mt-1">Upload</span></>}
+                        <label className="w-20 h-20 border-2 border-dashed border-border rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 transition-colors text-muted-foreground hover:text-gold bg-white shadow-sm">
+                            {uploading ? <Loader2 size={16} className="animate-spin" /> : <><Upload size={16} /><span className="text-[10px] mt-1 font-semibold uppercase tracking-tighter">Upload</span></>}
                             <input type="file" accept="image/*,video/*" className="hidden" onChange={e => e.target.files && uploadImage(e.target.files[0])} />
                         </label>
                     </div>
                 </div>
 
-                <button type="submit" disabled={saving} className="btn-gold px-8 py-3 rounded-sm text-sm flex items-center gap-2">
+                <button type="submit" disabled={saving} className="btn-gold px-10 py-4 rounded-sm text-xs font-bold tracking-widest shadow-xl flex items-center gap-2">
                     {saving && <Loader2 size={15} className="animate-spin" />}
-                    {isEdit ? 'Save Changes' : 'Create Product'}
+                    {isEdit ? 'SAVE PRODUCT CHANGES' : 'CREATE NEW PRODUCT'}
                 </button>
             </form>
         </div>

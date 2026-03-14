@@ -40,12 +40,12 @@ const Dashboard = () => {
                 <h1 className="font-display text-2xl text-foreground tracking-widest">DASHBOARD</h1>
                 <div className="flex gap-2 items-center flex-wrap">
                     <input type="date" value={from} onChange={e => setFrom(e.target.value)}
-                        className="bg-secondary border border-border rounded-sm px-3 py-1.5 text-xs text-foreground focus:outline-none focus:border-gold/60" />
-                    <span className="text-muted-foreground text-xs">to</span>
+                        className="bg-white border border-border rounded-sm px-3 py-1.5 text-xs text-black focus:outline-none focus:border-gold/60 shadow-sm font-medium" />
+                    <span className="text-muted-foreground text-xs font-semibold">to</span>
                     <input type="date" value={to} onChange={e => setTo(e.target.value)}
-                        className="bg-secondary border border-border rounded-sm px-3 py-1.5 text-xs text-foreground focus:outline-none focus:border-gold/60" />
-                    <button onClick={load} className="btn-gold px-4 py-1.5 rounded-sm text-xs">Filter</button>
-                    <button onClick={() => { setFrom(''); setTo(''); setTimeout(load, 0); }} className="border border-border text-muted-foreground px-3 py-1.5 rounded-sm text-xs hover:text-foreground transition-colors">Reset</button>
+                        className="bg-white border border-border rounded-sm px-3 py-1.5 text-xs text-black focus:outline-none focus:border-gold/60 shadow-sm font-medium" />
+                    <button onClick={load} className="btn-gold px-4 py-1.5 rounded-sm text-xs shadow-md">Filter</button>
+                    <button onClick={() => { setFrom(''); setTo(''); setTimeout(load, 0); }} className="bg-white border border-border text-muted-foreground px-3 py-1.5 rounded-sm text-xs hover:text-foreground transition-colors shadow-sm">Reset</button>
                 </div>
             </div>
 

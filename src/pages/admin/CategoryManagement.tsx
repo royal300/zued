@@ -45,12 +45,12 @@ const CategoryManagement = () => {
     };
 
     return (
-        <div className="p-6 min-h-screen">
-            <h1 className="font-display text-2xl text-foreground tracking-widest mb-6">CATEGORIES</h1>
+        <div className="p-6 min-h-screen bg-white">
+            <h1 className="font-display text-2xl text-foreground tracking-widest mb-6 uppercase">Categories</h1>
 
             {/* Add Form */}
-            <div className="glass-card rounded-sm p-6 border border-border/60 mb-6">
-                <h2 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">Add Category</h2>
+            <div className="bg-[#fdfdfd] border border-border/80 rounded-sm p-6 mb-6 shadow-sm">
+                <h2 className="text-xs font-bold uppercase tracking-wider text-black mb-4">Add Category</h2>
                 <form onSubmit={handleAdd} className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                     <input
                         type="text"
@@ -58,12 +58,12 @@ const CategoryManagement = () => {
                         value={name}
                         onChange={e => setName(e.target.value)}
                         required
-                        className="bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60 col-span-1"
+                        className="bg-white border border-border rounded-sm px-3 py-2 text-sm text-black placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/60 col-span-1 shadow-inner"
                     />
                     <select
                         value={parentId}
                         onChange={e => setParentId(e.target.value)}
-                        className="bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60"
+                        className="bg-white border border-border rounded-sm px-3 py-2 text-sm text-black focus:outline-none focus:border-gold/60 shadow-inner"
                     >
                         <option value="">— Main Category —</option>
                         {mainCats.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
@@ -71,46 +71,46 @@ const CategoryManagement = () => {
                     <select
                         value={productType}
                         onChange={e => setProductType(e.target.value)}
-                        className="bg-secondary border border-border rounded-sm px-3 py-2 text-sm text-foreground focus:outline-none focus:border-gold/60"
+                        className="bg-white border border-border rounded-sm px-3 py-2 text-sm text-black focus:outline-none focus:border-gold/60 shadow-inner"
                     >
                         <option value="all">All</option>
                         <option value="jewellery">Jewellery</option>
                     </select>
-                    <button type="submit" disabled={saving} className="btn-gold rounded-sm py-2 text-sm flex items-center justify-center gap-2">
+                    <button type="submit" disabled={saving} className="btn-gold rounded-sm py-2 text-xs font-bold uppercase tracking-widest shadow-md flex items-center justify-center gap-2">
                         {saving ? <Loader2 size={14} className="animate-spin" /> : <Plus size={14} />}
-                        Add
+                        Add Category
                     </button>
                 </form>
-                {error && <p className="text-destructive text-xs mt-2">{error}</p>}
+                {error && <p className="text-destructive text-[10px] font-semibold mt-2 uppercase">{error}</p>}
             </div>
 
             {/* Category Tree */}
             {loading ? (
                 <div className="flex justify-center py-16"><Loader2 size={24} className="animate-spin text-gold" /></div>
             ) : (
-                <div className="glass-card rounded-sm border border-border/60 overflow-hidden">
+                <div className="bg-white border border-border/80 rounded-sm shadow-sm overflow-hidden">
                     {mainCats.length === 0 ? (
                         <p className="text-muted-foreground text-sm text-center py-10">No categories yet. Add one above.</p>
                     ) : (
                         mainCats.map(main => (
                             <div key={main.id} className="border-b border-border/40 last:border-0">
-                                <div className="flex items-center justify-between px-5 py-3 bg-secondary/20">
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-foreground font-semibold text-sm">{main.name}</span>
-                                        <span className="text-xs text-muted-foreground bg-secondary border border-border px-2 py-0.5 rounded-sm">{main.product_type}</span>
+                                <div className="flex items-center justify-between px-5 py-4 bg-[#fafafa]">
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-black font-bold text-sm tracking-wide">{main.name.toUpperCase()}</span>
+                                        <span className="text-[10px] font-bold text-gold bg-gold/5 border border-gold/20 px-2 py-0.5 rounded-sm uppercase tracking-tighter">{main.product_type}</span>
                                     </div>
-                                    <button onClick={() => handleDelete(main.id)} className="text-muted-foreground hover:text-destructive transition-colors p-1">
+                                    <button onClick={() => handleDelete(main.id)} className="text-muted-foreground hover:text-destructive transition-colors p-1.5 hover:bg-destructive/5 rounded-full">
                                         <Trash2 size={14} />
                                     </button>
                                 </div>
                                 {subCats.filter(s => s.parent_id === main.id).map(sub => (
-                                    <div key={sub.id} className="flex items-center justify-between px-5 py-2.5 pl-10 border-t border-border/30">
-                                        <div className="flex items-center gap-2">
-                                            <ChevronRight size={12} className="text-muted-foreground" />
-                                            <span className="text-sm text-foreground/80">{sub.name}</span>
-                                            <span className="text-xs text-muted-foreground bg-secondary border border-border px-2 py-0.5 rounded-sm">{sub.product_type}</span>
+                                    <div key={sub.id} className="flex items-center justify-between px-5 py-3 pl-12 border-t border-border/20 bg-white hover:bg-[#fcfcfc] transition-colors">
+                                        <div className="flex items-center gap-3">
+                                            <ChevronRight size={12} className="text-gold" />
+                                            <span className="text-sm text-foreground font-medium">{sub.name}</span>
+                                            <span className="text-[9px] font-semibold text-muted-foreground bg-secondary/50 border border-border/50 px-1.5 py-0.5 rounded-sm uppercase">{sub.product_type}</span>
                                         </div>
-                                        <button onClick={() => handleDelete(sub.id)} className="text-muted-foreground hover:text-destructive transition-colors p-1">
+                                        <button onClick={() => handleDelete(sub.id)} className="text-muted-foreground hover:text-destructive transition-colors p-1.5 hover:bg-destructive/5 rounded-full">
                                             <Trash2 size={14} />
                                         </button>
                                     </div>

@@ -20,9 +20,9 @@ const AdminLayout = () => {
     const handleLogout = () => { logout(); navigate('/admin/login'); };
 
     return (
-        <div className="min-h-screen bg-background flex">
+        <div className="min-h-screen bg-white flex">
             {/* Sidebar */}
-            <aside className={`${sidebarOpen ? 'w-56' : 'w-14'} transition-all duration-300 bg-background border-r border-border flex flex-col flex-shrink-0`}>
+            <aside className={`${sidebarOpen ? 'w-56' : 'w-14'} transition-all duration-300 bg-white border-r border-border flex flex-col flex-shrink-0`}>
                 <div className="h-16 flex items-center justify-between px-4 border-b border-border">
                     {sidebarOpen && (
                         <div className="flex items-center gap-2 overflow-hidden">
