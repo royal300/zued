@@ -17,8 +17,12 @@ const jewelleryImages: Record<string, string> = {
 
 export const getProductImage = (imagePath: string): string => {
   if (!imagePath) return jewellery1;
-  if (imagePath.startsWith('http') || imagePath.startsWith('/uploads')) {
+  if (imagePath.startsWith('http') || imagePath.startsWith('/uploads') || imagePath.startsWith('data:')) {
     return imagePath;
+  }
+  // If it looks like a filename (contains a dot and doesn't start with /), assume it's an upload
+  if (imagePath.includes('.') && !imagePath.startsWith('/')) {
+    return `/uploads/${imagePath}`;
   }
   return jewelleryImages[imagePath] || jewellery1;
 };

@@ -6,52 +6,56 @@
 
 @layer base {
   :root {
-    /* Core Luxury Palette */
-    --background: 220 15% 5%; /* Deep obsidian black */
-    --foreground: 0 0% 98%;   /* Near white for text */
+    /* Core */
+    --background: 28 100% 75%;
+    /* Peach (#ffbb7e) */
+    --foreground: 344 30% 15%;
+    /* Dark pink-ish for contrast */
 
-    --card: 220 15% 8%;      /* Slightly lighter obsidian for cards */
-    --card-foreground: 0 0% 98%;
+    --card: 28 100% 70%;
+    /* Slightly darker peach for cards */
+    --card-foreground: 344 30% 15%;
 
-    --popover: 220 15% 8%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 28 100% 75%;
+    --popover-foreground: 344 30% 15%;
 
-    --primary: 43 74% 49%;    /* True Gold (#CFA035) */
-    --primary-foreground: 220 15% 5%;
+    --primary: 344 100% 65%;
+    /* Pink (#ff4e7d) */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 10% 12%; /* Dark grey for secondary elements */
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 344 100% 55%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 10% 15%;
-    --muted-foreground: 220 5% 65%;
+    --muted: 28 80% 65%;
+    --muted-foreground: 344 20% 40%;
 
-    --accent: 43 74% 49%;
-    --accent-foreground: 220 15% 5%;
+    --accent: 344 100% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 220 10% 15%;
-    --input: 220 10% 15%;
-    --ring: 43 74% 49%;
+    --border: 344 20% 60%;
+    --input: 344 20% 60%;
+    --ring: 344 100% 65%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Custom luxury tokens */
-    --gold: 43 74% 49%;      /* Primary Gold */
-    --gold-light: 45 85% 65%;
-    --gold-dark: 40 70% 35%;
-    --obsidian: 220 15% 5%;
-    --obsidian-card: 220 15% 8%;
-    --obsidian-surface: 220 10% 15%;
+    --gold: 344 100% 65%;
+    /* Pink (#ff4e7d) */
+    --gold-light: 344 100% 75%;
+    --gold-dark: 344 80% 45%;
+    --obsidian: 344 30% 10%;
+    --obsidian-card: 344 30% 15%;
+    --obsidian-surface: 344 30% 20%;
 
-    --gradient-gold: linear-gradient(135deg, #8A6E2F 0%, #CFA035 25%, #EBCB8B 50%, #CFA035 75%, #8A6E2F 100%);
-    --gradient-gold-simple: linear-gradient(135deg, #CFA035, #EBCB8B);
-    --gradient-dark: linear-gradient(180deg, #121417, #1A1D21);
-    
-    --shadow-gold: 0 0 30px hsla(43, 74%, 49%, 0.2), 0 0 60px hsla(43, 74%, 49%, 0.1);
-    --shadow-gold-sm: 0 0 15px hsla(43, 74%, 49%, 0.15);
-    --glow-gold: 0 0 20px hsla(43, 74%, 49%, 0.3);
+    --gradient-gold: linear-gradient(135deg, hsl(344, 80%, 45%), hsl(344, 100%, 65%), hsl(344, 100%, 75%), hsl(344, 100%, 65%), hsl(344, 80%, 45%));
+    --gradient-gold-simple: linear-gradient(135deg, hsl(344, 100%, 55%), hsl(344, 100%, 75%));
+    --gradient-dark: linear-gradient(180deg, hsl(344, 30%, 5%), hsl(344, 30%, 15%));
+    --shadow-gold: 0 0 30px hsl(344, 100%, 65% / 0.4), 0 0 60px hsl(344, 100%, 65% / 0.2);
+    --shadow-gold-sm: 0 0 15px hsl(344, 100%, 65% / 0.3);
+    --glow-gold: 0 0 20px hsl(344, 100%, 65% / 0.5);
   }
 }
 

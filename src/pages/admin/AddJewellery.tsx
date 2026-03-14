@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { adminFetch } from '@/context/AdminAuthContext';
 import { Loader2, Upload, ArrowLeft, Plus, Trash2 } from 'lucide-react';
+import { getProductImage } from '@/components/ProductCard';
 import { toast } from 'sonner';
 
 const AddJewellery = () => {
@@ -167,9 +168,9 @@ const AddJewellery = () => {
                         {images.map((img, i) => (
                             <div key={i} className="relative group">
                                 {img.toLowerCase().endsWith('.mp4') || img.toLowerCase().endsWith('.webm') || img.toLowerCase().endsWith('.mov') ? (
-                                    <video src={img} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                    <video src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border" />
                                 ) : (
-                                    <img src={img} className="w-20 h-20 object-cover rounded-sm border border-border" />
+                                    <img src={getProductImage(img)} className="w-20 h-20 object-cover rounded-sm border border-border" />
                                 )}
                                 <button type="button" onClick={() => setImages(images.filter((_, idx) => idx !== i))}
                                     className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive rounded-full text-foreground text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">×</button>

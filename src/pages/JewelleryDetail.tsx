@@ -20,10 +20,9 @@ const JewelleryDetail = () => {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
-  const isApi = id?.startsWith('api-');
-  const apiId = isApi ? id!.replace('api-', '') : null;
-
-  const staticProduct = !isApi ? jewelleryProducts.find((p) => p.id === id) : undefined;
+  const staticProduct = jewelleryProducts.find((p) => p.id === id);
+  const isApi = !staticProduct && !!id && !isNaN(Number(id));
+  const apiId = isApi ? id : null;
 
   const [apiProduct, setApiProduct] = useState<any>(null);
   const [apiLoading, setApiLoading] = useState(isApi);
@@ -149,6 +148,8 @@ const JewelleryDetail = () => {
   }
 
   // === API PRODUCT UI ===
+  if (!apiProduct) return null; // Or some other fallback if both fail, though handled above
+
   const p = apiProduct;
   const images: string[] = typeof p.images === 'string' ? JSON.parse(p.images) : (p.images || []);
   const displayPrice = Number(p.sale_price || p.original_price);
@@ -167,7 +168,7 @@ const JewelleryDetail = () => {
   }, []);
 
   const handleAddApiToCart = () => {
-    addToCart({ productId: `api-${p.id}`, productType: 'jewellery', name: p.name, price: displayPrice, image: displayImage, quantity: 1 });
+    addToCart({ productId: String(p.id), productType: 'jewellery', name: p.name, price: displayPrice, image: displayImage, quantity: 1 });
     toast.success(`${p.name} added to cart!`);
   };
 

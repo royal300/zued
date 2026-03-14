@@ -33,8 +33,9 @@ def main():
     # 4. Finalize & Restart
     print('\n=== Restarting Services ===')
     run_ssh(client, 'mkdir -p /var/www/zued/uploads && chmod 755 /var/www/zued/uploads')
-    # Start API from the api subfolder
-    run_ssh(client, 'cd /var/www/zued-api/api && (pm2 restart zued-api || pm2 start server.js --name zued-api)')
+    # Use absolute path for PM2 to avoid confusion
+    run_ssh(client, 'pm2 delete zued-api || true')
+    run_ssh(client, 'cd /var/www/zued-api/api && pm2 start server.js --name zued-api')
     run_ssh(client, 'pm2 save')
 
     # 5. Verify API health

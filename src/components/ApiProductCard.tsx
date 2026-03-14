@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ApiProductCard = ({ product, type }: Props) => {
-    const href = `/jewellery/api-${product.id}`;
+    const href = `/jewellery/${product.id}`;
     const imageUrl = product.images?.[0]
         ? product.images[0].startsWith('http') || product.images[0].startsWith('/uploads')
             ? product.images[0]
