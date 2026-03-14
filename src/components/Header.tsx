@@ -52,7 +52,7 @@ const Header = () => {
               <Link
                 key={link.label}
                 to={link.to}
-                className={`relative text-[10px] font-semibold tracking-[0.1em] uppercase whitespace-nowrap transition-all duration-300 group ${isActive(link.to)
+                className={`relative text-[11px] font-semibold tracking-[0.1em] uppercase whitespace-nowrap transition-all duration-300 group ${isActive(link.to)
                   ? 'text-gold'
                   : 'text-foreground/70 hover:text-foreground'
                   }`}
