@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Upload, Save, CheckCircle, AlertCircle, Settings as SettingsIcon } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
+import { adminFetch } from '@/context/AdminAuthContext';
 
 const Settings = () => {
     const [logo, setLogo] = useState<string | null>(null);
@@ -25,11 +26,8 @@ const Settings = () => {
         formData.append('image', file);
 
         try {
-            const res = await fetch('/api/admin/settings/logo', {
+            const res = await adminFetch('/api/admin/settings/logo', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('adminToken')}`
-                },
                 body: formData
             });
 

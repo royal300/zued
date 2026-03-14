@@ -163,9 +163,14 @@ const AddJewellery = () => {
                                     className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive rounded-full text-white text-[10px] flex items-center justify-center border border-white opacity-0 group-hover:opacity-100 transition-opacity">×</button>
                             </div>
                         ))}
-                        <label className="w-20 h-20 border-2 border-dashed border-border rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 transition-colors text-muted-foreground hover:text-gold bg-white shadow-sm">
+                        <label className="relative w-20 h-20 border-2 border-dashed border-border rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-gold/50 transition-colors text-muted-foreground hover:text-gold bg-white shadow-sm overflow-hidden">
                             {uploading ? <Loader2 size={16} className="animate-spin" /> : <><Upload size={16} /><span className="text-[10px] mt-1 font-semibold uppercase tracking-tighter">Upload</span></>}
-                            <input type="file" accept="image/*,video/*" className="hidden" onChange={e => e.target.files && uploadImage(e.target.files[0])} />
+                            <input 
+                                type="file" 
+                                accept="image/*,video/*" 
+                                className="absolute inset-0 opacity-0 cursor-pointer w-full h-full" 
+                                onChange={e => e.target.files && uploadImage(e.target.files[0])} 
+                            />
                         </label>
                     </div>
                 </div>

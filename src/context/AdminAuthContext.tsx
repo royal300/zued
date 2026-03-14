@@ -49,12 +49,18 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const adminFetch = async (url: string, options: RequestInit = {}) => {
     const token = localStorage.getItem(ADMIN_TOKEN_KEY);
+    const headers: Record<string, string> = {
+        Authorization: `Bearer ${token}`,
+        ...((options.headers as Record<string, string>) || {}),
+    };
+
+    // Don't set Content-Type for FormData, let browser handle it with boundary
+    if (!(options.body instanceof FormData) && !headers['Content-Type']) {
+        headers['Content-Type'] = 'application/json';
+    }
+
     return fetch(url, {
         ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-            ...(options.headers || {}),
-        },
+        headers,
     });
 };
