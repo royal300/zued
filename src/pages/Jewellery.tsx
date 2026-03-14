@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import { jewelleryProducts } from '@/data/products';
 import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
@@ -13,7 +13,7 @@ const Jewellery = () => {
   const [apiProducts, setApiProducts] = useState<any[]>([]);
   const [apiCategories, setApiCategories] = useState<any[]>([]);
 
-  const staticCats = ['All', 'Ring', 'Bracelet', 'Earring', 'Wrestlet', 'Chain'];
+  const staticCats = ['All', 'Ring', 'Chain Pendant', 'Earrings', 'Bracelet', 'Bangles', 'Chain Earring Set'];
 
   useEffect(() => {
     fetch('/api/products?type=jewellery')
@@ -31,12 +31,15 @@ const Jewellery = () => {
     setActiveCategory(cat);
   }, [searchParams]);
 
+  const navigate = useNavigate();
+
   const handleCategoryClick = (cat: string) => {
     setActiveCategory(cat);
     if (cat === 'All') {
       setSearchParams(new URLSearchParams());
     } else {
-      setSearchParams({ category: cat });
+      const slug = cat.toLowerCase().replace(/ /g, '-');
+      navigate(`/category/${slug}`);
     }
   };
 

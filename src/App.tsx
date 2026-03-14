@@ -16,6 +16,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import Contact from "./pages/Contact";
+import CategoryPage from "./pages/CategoryPage";
 import NotFound from "./pages/NotFound";
 // Admin
 import AdminLogin from "./pages/admin/AdminLogin";
@@ -45,6 +46,7 @@ const App = () => (
                 <Route path="/" element={<Jewellery />} />
                 <Route path="/jewellery/:id" element={<JewelleryDetail />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/category/:slug" element={<CategoryPage />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
 

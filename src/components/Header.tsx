@@ -17,19 +17,17 @@ const Header = () => {
 
   const navLinks = [
     { label: 'Home', to: '/' },
-    { label: 'Ring', to: '/?category=Ring' },
-    { label: 'Bracelet', to: '/?category=Bracelet' },
-    { label: 'Earring', to: '/?category=Earring' },
-    { label: 'Wrestlet', to: '/?category=Wrestlet' },
-    { label: 'Chain', to: '/?category=Chain' },
+    { label: 'Ring', to: '/category/ring' },
+    { label: 'Chain Pendant', to: '/category/chain-pendant' },
+    { label: 'Earrings', to: '/category/earrings' },
+    { label: 'Bracelet', to: '/category/bracelet' },
+    { label: 'Bangles', to: '/category/bangles' },
+    { label: 'Chain Earring Set', to: '/category/chain-earring-set' },
     { label: 'Contact Us', to: '/contact' },
   ];
 
   const isActive = (to: string) => {
-    if (to.includes('?')) {
-      return location.pathname + location.search === to;
-    }
-    return location.pathname === to && location.search === '';
+    return location.pathname === to;
   };
 
   return (
