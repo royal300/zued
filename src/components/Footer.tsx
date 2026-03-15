@@ -47,6 +47,7 @@ const Footer = () => {
                 { label: 'Earring', to: '/?category=Earring' },
                 { label: 'Wrestlet', to: '/?category=Wrestlet' },
                 { label: 'Chain', to: '/?category=Chain' },
+                { label: 'About Us', to: '/about' },
                 { label: 'Contact Us', to: '/contact' },
               ].map((link) => (
                 <Link

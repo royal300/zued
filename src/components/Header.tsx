@@ -17,6 +17,7 @@ const Header = () => {
 
   const [navLinks, setNavLinks] = useState([
     { label: 'Home', to: '/' },
+    { label: 'About Us', to: '/about' },
     { label: 'Contact Us', to: '/contact' },
   ]);
 
@@ -33,6 +34,7 @@ const Header = () => {
           setNavLinks([
             { label: 'Home', to: '/' },
             ...dynamicLinks,
+            { label: 'About Us', to: '/about' },
             { label: 'Contact Us', to: '/contact' },
           ]);
         }
@@ -55,7 +57,7 @@ const Header = () => {
             <img
               src="/zued_logo_big.png?v=1.1"
               alt="ZUED - Shine That Stays"
-              className="h-10 sm:h-12 lg:h-12 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
+              className="h-12 sm:h-14 lg:h-16 w-auto object-contain object-center transition-transform duration-300 group-hover:scale-105"
               fetchPriority="high"
             />
           </Link>
