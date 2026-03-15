@@ -22,6 +22,40 @@ export const useAdminAuth = () => {
 export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
     const [token, setToken] = useState<string | null>(() => localStorage.getItem(ADMIN_TOKEN_KEY));
     const [loading, setLoading] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+
+    const logout = useCallback(() => {
+        localStorage.removeItem(ADMIN_TOKEN_KEY);
+        setToken(null);
+    }, []);
+
+    // Validate token on mount
+    useEffect(() => {
+        const validateToken = async () => {
+            if (!token) {
+                setInitializing(false);
+                return;
+            }
+
+            try {
+                // Try to hit a protected endpoint to verify token
+                const res = await fetch('/api/admin/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (res.status === 401) {
+                    console.error('Session expired or invalid');
+                    logout();
+                }
+            } catch (err) {
+                console.error('Auth validation failed', err);
+            } finally {
+                setInitializing(false);
+            }
+        };
+
+        validateToken();
+    }, [token, logout]);
 
     const login = useCallback(async (username: string, password: string) => {
         const res = await fetch('/api/admin/login', {
@@ -35,13 +69,8 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
         setToken(data.token);
     }, []);
 
-    const logout = useCallback(() => {
-        localStorage.removeItem(ADMIN_TOKEN_KEY);
-        setToken(null);
-    }, []);
-
     return (
-        <AdminAuthContext.Provider value={{ token, loading, login, logout, isAdmin: !!token }}>
+        <AdminAuthContext.Provider value={{ token, loading: loading || initializing, login, logout, isAdmin: !!token }}>
             {children}
         </AdminAuthContext.Provider>
     );
