@@ -21,15 +21,15 @@ const ProductFeaturesStrip = () => {
     ];
 
     return (
-        <div className="w-full bg-white py-4 md:py-6 border-y border-border/50">
-            <div className="max-w-7xl mx-auto px-2 md:px-4">
-                <div className="flex flex-row justify-between items-center gap-1 md:gap-4 overflow-hidden">
+        <div className="w-full bg-white py-6 md:py-8 border-y border-border/50">
+            <div className="max-w-7xl mx-auto px-4">
+                <div className="grid grid-cols-2 md:flex md:flex-row justify-between items-center gap-y-6 gap-x-2 md:gap-4">
                     {features.map((feature, index) => (
-                        <div key={index} className="flex flex-row items-center justify-center gap-1 md:gap-3 flex-1">
+                        <div key={index} className="flex flex-row items-center justify-center gap-2 md:gap-3">
                             <div className="text-pink-600 shrink-0">
                                 {feature.icon}
                             </div>
-                            <span className="text-[7px] min-[400px]:text-[8px] md:text-xs font-bold uppercase tracking-tighter md:tracking-wider text-pink-600 whitespace-nowrap">
+                            <span className="text-[9px] min-[400px]:text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-600 whitespace-nowrap">
                                 {feature.text}
                             </span>
                         </div>

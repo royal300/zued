@@ -202,6 +202,7 @@ const JewelleryDetail = () => {
                           className="absolute inset-0 w-full h-full object-cover"
                           muted
                           playsInline
+                          preload="none"
                         />
                         <div className="absolute inset-0 bg-black/20" />
                         <Play size={20} className="relative z-10 text-white drop-shadow-md" fill="currentColor" />
@@ -222,6 +223,7 @@ const JewelleryDetail = () => {
                       className="absolute inset-0 w-full h-full object-cover" 
                       muted 
                       playsInline 
+                      preload="none"
                     />
                     <div className="absolute inset-0 bg-black/20" />
                     <Play size={20} className="relative z-10 text-white drop-shadow-md" fill="currentColor" />

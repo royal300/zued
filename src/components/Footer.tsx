@@ -27,7 +27,7 @@ const Footer = () => {
               className="h-16 sm:h-14 w-auto object-contain object-left"
             />
             <p className="text-muted-foreground text-sm leading-relaxed max-w-xs">
-              Premium anti-tarnish jewellery. Crafted for those who refuse to blend in.
+              Premium anti-tarnish jewellery. Designed for those who stand out.
             </p>
             <p className="text-gold text-xs tracking-[0.3em] uppercase font-semibold">
               Shine That Stays.
