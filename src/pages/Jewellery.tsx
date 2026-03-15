@@ -76,13 +76,13 @@ const Jewellery = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
             {/* Banner 1 */}
-            <div className="relative w-full aspect-video rounded-lg overflow-hidden group shadow-lg">
+            <a href="https://zued.online/category/bangles" className="block relative w-full aspect-video rounded-lg overflow-hidden group shadow-lg">
               <img
                 src="/banner1.png"
                 alt="Banner 1"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               />
-            </div>
+            </a>
 
             {/* Banner 2 */}
             <div className="relative w-full aspect-video rounded-lg overflow-hidden group shadow-lg">
