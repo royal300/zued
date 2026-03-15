@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, ShoppingCart, Play, Loader2 } from 'lucide-react';
-import { jewelleryProducts } from '@/data/products';
 import { getProductImage } from '@/components/ProductCard';
 import { useCart } from '@/context/CartContext';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { toast } from 'sonner';
-import jewelleryVideo from '@/assets/jewellery-video.mp4';
 import ProductFeaturesStrip from '@/components/ProductFeaturesStrip';
-import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 
 // getProductImage is now imported from @/components/ProductCard
@@ -21,35 +18,29 @@ const JewelleryDetail = () => {
   const { addToCart } = useCart();
 
   // --- 1. ALL HOOKS AT THE TOP ---
-  const staticProduct = jewelleryProducts.find((p) => p.id === id);
-  const isApi = !staticProduct && !!id && !isNaN(Number(id));
-  const apiId = isApi ? id : null;
-
   const [apiProduct, setApiProduct] = useState<any>(null);
-  const [apiLoading, setApiLoading] = useState(isApi);
+  const [apiLoading, setApiLoading] = useState(true);
   const [activeImage, setActiveImage] = useState(0);
-  const [showVideo, setShowVideo] = useState(false);
   const [apiProducts, setApiProducts] = useState<any[]>([]);
 
   // Reset state when ID changes
   useEffect(() => {
     setApiProduct(null);
-    setApiLoading(isApi);
+    setApiLoading(true);
     setActiveImage(0);
-    setShowVideo(false);
-  }, [id, isApi]);
+  }, [id]);
 
-  // Fetch specific product if it's an API ID
+  // Fetch specific product from API
   useEffect(() => {
-    if (!isApi || !apiId) return;
-    fetch(`/api/products/${apiId}`)
+    if (!id) return;
+    fetch(`/api/products/${id}`)
       .then(r => r.ok ? r.json() : null)
       .then(d => { 
         setApiProduct(d); 
         setApiLoading(false); 
       })
       .catch(() => setApiLoading(false));
-  }, [apiId, isApi]);
+  }, [id]);
 
   // Fetch all products for "Similar Products" section
   useEffect(() => {
@@ -72,7 +63,7 @@ const JewelleryDetail = () => {
     );
   }
 
-  if (!staticProduct && !apiProduct) {
+  if (!apiProduct) {
     return (
       <div className="min-h-screen bg-white">
         <Header />
@@ -87,44 +78,28 @@ const JewelleryDetail = () => {
     );
   }
 
-  // --- 3. DATA PREPARATION ---
-  const isStatic = !!staticProduct;
-  const product = staticProduct || apiProduct;
+  // --- 3. DATA PREPARATION (API products only) ---
+  const product = apiProduct;
 
-  // Normalize data for both types
+  // Normalize data
   const name = product.name;
-  const category = isStatic ? product.category : product.category_name;
-  const description = isStatic ? product.description : product.short_description;
-  const longDescription = isStatic ? null : product.long_description;
+  const category = product.category_name;
+  const description = product.short_description;
+  const longDescription = product.long_description;
   const badge = product.badge;
   
   // Price logic
-  let displayPrice: number;
-  let originalPrice: number | null = null;
-  let priceString: string;
-
-  if (isStatic) {
-    displayPrice = parseInt(product.price.replace(/[₹,]/g, ''));
-    priceString = product.price;
-  } else {
-    displayPrice = Number(product.sale_price || product.original_price);
-    originalPrice = product.original_price ? Number(product.original_price) : null;
-    priceString = `₹${displayPrice.toLocaleString()}`;
-  }
-
-  const hasSale = !isStatic && originalPrice && displayPrice < originalPrice;
+  const displayPrice = Number(product.sale_price || product.original_price);
+  const originalPrice = product.original_price ? Number(product.original_price) : null;
+  const priceString = `₹${displayPrice.toLocaleString()}`;
+  const hasSale = originalPrice && displayPrice < originalPrice;
 
   // Image/Gallery logic
-  let gallery: string[] = [];
-  if (isStatic) {
-    gallery = product.gallery || [];
-  } else {
-    gallery = typeof product.images === 'string' ? JSON.parse(product.images) : (product.images || []);
-  }
+  const gallery: string[] = typeof product.images === 'string' ? JSON.parse(product.images) : (product.images || []);
 
   const activeImageUrl = gallery[activeImage] ? getProductImage(gallery[activeImage]) : '';
   const isVideo = (url: string) => url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') || url.toLowerCase().endsWith('.mov');
-  const activeUrlIsVideo = isStatic ? showVideo : (activeImageUrl && isVideo(activeImageUrl));
+  const activeUrlIsVideo = activeImageUrl && isVideo(activeImageUrl);
 
   const handleAddToCart = () => {
     addToCart({ 
@@ -132,15 +107,13 @@ const JewelleryDetail = () => {
       productType: 'jewellery', 
       name: product.name, 
       price: displayPrice, 
-      image: isStatic ? product.image : activeImageUrl, 
+      image: activeImageUrl, 
       quantity: 1 
     });
     toast.success(`${product.name} added to cart!`);
   };
 
-  const similarProducts = isStatic 
-    ? jewelleryProducts.filter(p => p.category === category && p.id !== product.id).slice(0, 4)
-    : apiProducts.filter(ap => ap.category_name === category && String(ap.id) !== id).slice(0, 4);
+  const similarProducts = apiProducts.filter(ap => ap.category_name === category && String(ap.id) !== id).slice(0, 4);
 
   // --- 4. MAIN RENDER ---
   return (
@@ -158,7 +131,7 @@ const JewelleryDetail = () => {
               <div className="relative aspect-square rounded-sm overflow-hidden gold-border-glow bg-secondary">
                 {activeUrlIsVideo ? (
                   <video 
-                    src={isStatic ? jewelleryVideo : activeImageUrl} 
+                    src={activeImageUrl} 
                     className="w-full h-full object-cover" 
                     autoPlay 
                     muted 
@@ -192,8 +165,8 @@ const JewelleryDetail = () => {
                 {gallery.map((img, i) => (
                   <button 
                     key={i} 
-                    onClick={() => { setActiveImage(i); setShowVideo(false); }}
-                    className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all ${!showVideo && activeImage === i ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
+                    onClick={() => { setActiveImage(i); }}
+                    className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all ${activeImage === i ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
                   >
                     {isVideo(img) ? (
                       <div className="w-full h-full relative flex items-center justify-center bg-black/5">
@@ -212,23 +185,6 @@ const JewelleryDetail = () => {
                     )}
                   </button>
                 ))}
-                
-                {isStatic && (
-                  <button 
-                    onClick={() => setShowVideo(true)} 
-                    className={`w-20 h-20 rounded-sm overflow-hidden border-2 transition-all relative flex items-center justify-center bg-black/5 ${showVideo ? 'border-gold shadow-[0_0_10px_hsl(43,74%,49%,0.4)]' : 'border-border hover:border-gold/50'}`}
-                  >
-                    <video 
-                      src={jewelleryVideo} 
-                      className="absolute inset-0 w-full h-full object-cover" 
-                      muted 
-                      playsInline 
-                      preload="none"
-                    />
-                    <div className="absolute inset-0 bg-black/20" />
-                    <Play size={20} className="relative z-10 text-white drop-shadow-md" fill="currentColor" />
-                  </button>
-                )}
               </div>
             </div>
 
@@ -292,11 +248,7 @@ const JewelleryDetail = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
               {similarProducts.map((p: any, i: number) => (
                 <div key={p.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
-                  {isStatic ? (
-                    <JewelleryCard product={p} />
-                  ) : (
-                    <ApiProductCard product={p} type="jewellery" />
-                  )}
+                  <ApiProductCard product={p} type="jewellery" />
                 </div>
               ))}
             </div>

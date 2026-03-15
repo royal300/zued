@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { jewelleryProducts } from '@/data/products';
-import { JewelleryCard } from '@/components/ProductCard';
 import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -83,9 +81,7 @@ const CategoryPage = () => {
         description: `Explore our collection of premium gold-plated ${categoryName.toLowerCase()}.`,
     };
 
-    const filteredStatic = jewelleryProducts.filter(p => p.category === meta.name);
     const filteredApi = apiProducts.filter(p => p.category_name === meta.name);
-    const totalCount = filteredStatic.length + filteredApi.length;
 
     return (
         <div className="min-h-screen bg-background">
@@ -126,7 +122,7 @@ const CategoryPage = () => {
             {/* Product Grid */}
             <section className="px-4 pb-20 pt-6">
                 <div className="max-w-7xl mx-auto">
-                    {(filteredStatic.length === 0 && filteredApi.length === 0) ? (
+                    {filteredApi.length === 0 ? (
                         <div className="text-center py-24">
                             <p className="text-muted-foreground text-sm tracking-wider">
                                 No products available in this category yet. Check back soon!
@@ -137,21 +133,12 @@ const CategoryPage = () => {
                         </div>
                     ) : (
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-                            {filteredStatic.map((product, i) => (
-                                <div
-                                    key={product.id}
-                                    className="animate-fade-in-up"
-                                    style={{ animationDelay: `${i * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}
-                                >
-                                    <JewelleryCard product={product} />
-                                </div>
-                            ))}
                             {filteredApi.map((product, i) => (
                                 <div
                                     key={`api-${product.id}`}
                                     className="animate-fade-in-up"
                                     style={{
-                                        animationDelay: `${(filteredStatic.length + i) * 0.08}s`,
+                                        animationDelay: `${i * 0.08}s`,
                                         opacity: 0,
                                         animationFillMode: 'forwards',
                                     }}

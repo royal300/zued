@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { jewelleryProducts } from '@/data/products';
-import { JewelleryCard } from '@/components/ProductCard';
+import { useSearchParams } from 'react-router-dom';
 import ApiProductCard from '@/components/ApiProductCard';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -13,8 +11,6 @@ const Jewellery = () => {
   const [activeCategory, setActiveCategory] = useState(initCat);
   const [apiProducts, setApiProducts] = useState<any[]>([]);
   const [apiCategories, setApiCategories] = useState<any[]>([]);
-
-  const staticCats = ['All', 'Ring', 'Chain Pendant', 'Earrings', 'Bracelet', 'Bangles', 'Chain Earring Set'];
 
   useEffect(() => {
     fetch('/api/products?type=jewellery')
@@ -44,17 +40,10 @@ const Jewellery = () => {
 
   const allCategories = ['All', ...apiCategories.map(c => c.name)];
 
-  const filteredStatic = activeCategory === 'All'
-    ? jewelleryProducts
-    : jewelleryProducts.filter(p => p.category === activeCategory);
-
-  const filteredApi = apiProducts.filter(p => {
+  const displayedApi = apiProducts.filter(p => {
     if (activeCategory === 'All') return true;
     return p.category_name === activeCategory;
   });
-
-  const displayedStatic = activeCategory === 'All' ? filteredStatic : filteredStatic.slice(0, 8);
-  const displayedApi = activeCategory === 'All' ? filteredApi : filteredApi.slice(0, 8 - displayedStatic.length);
 
   return (
     <div className="min-h-screen bg-background">
@@ -129,18 +118,13 @@ const Jewellery = () => {
       <section className="px-4 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
-            {displayedStatic.map((product, i) => (
-              <div key={product.id} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
-                <JewelleryCard product={product} />
-              </div>
-            ))}
             {displayedApi.map((product, i) => (
-              <div key={`api-${product.id}`} className="animate-fade-in-up" style={{ animationDelay: `${(displayedStatic.length + i) * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
+              <div key={`api-${product.id}`} className="animate-fade-in-up" style={{ animationDelay: `${i * 0.08}s`, opacity: 0, animationFillMode: 'forwards' }}>
                 <ApiProductCard product={product} type="jewellery" />
               </div>
             ))}
           </div>
-          {displayedStatic.length === 0 && displayedApi.length === 0 && (
+          {displayedApi.length === 0 && (
             <p className="text-center text-muted-foreground text-sm py-16">No products in this category.</p>
           )}
         </div>
