@@ -3,19 +3,19 @@ import { Star, Droplets, ShieldCheck, Sparkles } from 'lucide-react';
 const ProductFeaturesStrip = () => {
     const features = [
         {
-            icon: <Star className="w-3 h-3 md:w-5 md:h-5" />,
+            icon: <Star className="w-4 h-4 md:w-6 md:h-6" />,
             text: "High Quality Stainless Steel",
         },
         {
-            icon: <Droplets className="w-3 h-3 md:w-5 md:h-5" />,
+            icon: <Droplets className="w-4 h-4 md:w-6 md:h-6" />,
             text: "Water & Sweat Resistant",
         },
         {
-            icon: <ShieldCheck className="w-3 h-3 md:w-5 md:h-5" />,
+            icon: <ShieldCheck className="w-4 h-4 md:w-6 md:h-6" />,
             text: "6 Month Colour Assurance",
         },
         {
-            icon: <Sparkles className="w-3 h-3 md:w-5 md:h-5" />,
+            icon: <Sparkles className="w-4 h-4 md:w-6 md:h-6" />,
             text: "18K Gold Plated Finish",
         },
     ];
@@ -29,7 +29,7 @@ const ProductFeaturesStrip = () => {
                             <div className="text-pink-600 shrink-0">
                                 {feature.icon}
                             </div>
-                            <span className="text-[9px] min-[400px]:text-[10px] md:text-xs font-bold uppercase tracking-wider text-pink-600 whitespace-nowrap">
+                            <span className="text-[10px] md:text-sm font-bold uppercase tracking-wider text-pink-600 whitespace-nowrap">
                                 {feature.text}
                             </span>
                         </div>
