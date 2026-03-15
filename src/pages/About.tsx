@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Gem, ShieldCircle, Droplets, Sparkles } from "lucide-react";
+import { Gem, ShieldCheck, Droplets, Sparkles } from "lucide-react";
 
 const About = () => {
   return (
@@ -64,7 +64,7 @@ const About = () => {
 
               <section className="space-y-4 animate-slide-up" style={{ animationDelay: '0.4s' }}>
                 <div className="flex items-center gap-3 text-gold mb-2">
-                  <ShieldCircle size={24} />
+                  <ShieldCheck size={24} />
                   <h2 className="font-display text-xl tracking-wider uppercase">Designed with Trust in Mind</h2>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
